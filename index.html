@@ -25,8 +25,33 @@ html, body {
   font-family: 'Inter', sans-serif;
   font-weight: 300;
   color: #f0f0f0;
-  font-size: 34px;
+  font-size: clamp(16px, 1.8vw, 38px);
   -webkit-font-smoothing: antialiased;
+}
+
+/* Responsive adjustments for narrow/4:3 screens */
+@media (max-aspect-ratio: 14/9) {
+  .layout-split {
+    gap: 30px !important;
+  }
+  .split-image img {
+    max-height: 55vh !important;
+  }
+}
+
+@media (max-width: 1024px) {
+  .layout-split {
+    flex-direction: column !important;
+    gap: 20px !important;
+  }
+  .split-text, .split-image {
+    flex: none !important;
+    width: 100% !important;
+    text-align: center !important;
+  }
+  .split-image img {
+    max-height: 40vh !important;
+  }
 }
 
 /* ===== SLIDE SYSTEM ===== */
@@ -595,6 +620,48 @@ tr:last-child td {
 .zoom-caption .citation {
   font-size: 1.1em;
   opacity: 0.85;
+}
+
+/* ===== LIGHTBOX ===== */
+#lightbox {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.95);
+  z-index: 500;
+  cursor: zoom-out;
+  align-items: center;
+  justify-content: center;
+}
+#lightbox.open {
+  display: flex;
+}
+#lightbox img {
+  max-width: 95vw;
+  max-height: 95vh;
+  object-fit: contain;
+  cursor: grab;
+  transition: transform 0.2s ease;
+  transform-origin: center center;
+}
+#lightbox-close {
+  position: fixed;
+  top: 20px;
+  right: 30px;
+  color: #fff;
+  font-size: 40px;
+  cursor: pointer;
+  z-index: 501;
+  font-family: 'Inter', sans-serif;
+  font-weight: 300;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+}
+#lightbox-close:hover {
+  opacity: 1;
+}
+.slide-content img:not(.no-lightbox) {
+  cursor: zoom-in;
 }
 
 /* ===== SLIDE COUNTER ===== */
@@ -1765,6 +1832,12 @@ tr:last-child td {
 <!-- NOTES PANEL -->
 <div id="notes-panel"></div>
 
+<!-- LIGHTBOX -->
+<div id="lightbox">
+  <span id="lightbox-close">&times;</span>
+  <img id="lightbox-img" src="" alt="">
+</div>
+
 <script>
 (function() {
   // Background image injection
@@ -1871,6 +1944,80 @@ tr:last-child td {
   }
   slides[current].classList.add('active');
   counter.textContent = (current + 1) + ' / ' + slides.length;
+
+  // ===== LIGHTBOX =====
+  var lightbox = document.getElementById('lightbox');
+  var lightboxImg = document.getElementById('lightbox-img');
+  var lightboxClose = document.getElementById('lightbox-close');
+  var lightboxOpen = false;
+  var lbScale = 1;
+  var lbPanning = false;
+  var lbStartX = 0, lbStartY = 0, lbTransX = 0, lbTransY = 0, lbCurX = 0, lbCurY = 0;
+
+  // Click on any image in slides to open lightbox
+  document.querySelectorAll('.slide-content img').forEach(function(img) {
+    img.addEventListener('click', function(e) {
+      e.stopPropagation();
+      lightboxImg.src = img.src;
+      lightbox.classList.add('open');
+      lightboxOpen = true;
+      lbScale = 1;
+      lbTransX = 0; lbTransY = 0; lbCurX = 0; lbCurY = 0;
+      lightboxImg.style.transform = 'scale(1) translate(0,0)';
+    });
+  });
+
+  // Close lightbox
+  function closeLightbox() {
+    lightbox.classList.remove('open');
+    lightboxOpen = false;
+    lbScale = 1;
+    lightboxImg.style.transform = 'scale(1) translate(0,0)';
+  }
+
+  lightboxClose.addEventListener('click', closeLightbox);
+  lightbox.addEventListener('click', function(e) {
+    if (e.target === lightbox) closeLightbox();
+  });
+
+  // Zoom with scroll wheel
+  lightbox.addEventListener('wheel', function(e) {
+    e.preventDefault();
+    var delta = e.deltaY > 0 ? -0.15 : 0.15;
+    lbScale = Math.max(0.5, Math.min(5, lbScale + delta));
+    lightboxImg.style.transform = 'scale(' + lbScale + ') translate(' + lbCurX + 'px,' + lbCurY + 'px)';
+  }, { passive: false });
+
+  // Pan with mouse drag when zoomed
+  lightboxImg.addEventListener('mousedown', function(e) {
+    if (lbScale <= 1) return;
+    e.preventDefault();
+    lbPanning = true;
+    lbStartX = e.clientX - lbCurX;
+    lbStartY = e.clientY - lbCurY;
+    lightboxImg.style.cursor = 'grabbing';
+  });
+
+  document.addEventListener('mousemove', function(e) {
+    if (!lbPanning) return;
+    lbCurX = e.clientX - lbStartX;
+    lbCurY = e.clientY - lbStartY;
+    lightboxImg.style.transform = 'scale(' + lbScale + ') translate(' + lbCurX + 'px,' + lbCurY + 'px)';
+  });
+
+  document.addEventListener('mouseup', function() {
+    lbPanning = false;
+    if (lightboxImg) lightboxImg.style.cursor = 'grab';
+  });
+
+  // Escape closes lightbox too (before slide navigation)
+  document.addEventListener('keydown', function(e) {
+    if (lightboxOpen && (e.key === 'Escape' || e.key === 'ArrowLeft' || e.key === 'ArrowRight')) {
+      e.stopImmediatePropagation();
+      closeLightbox();
+    }
+  }, true);
+
 })();
 </script>
 
