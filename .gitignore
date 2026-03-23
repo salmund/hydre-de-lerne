@@ -1,0 +1,18 @@
+*.bak
+*.tmp
+.DS_Store
+Thumbs.db
+bibliographie/
+images/Tu peux me trouver des images intéressantes à mett.pdf
+images/catalogue.html
+images/serveur_catalogue.py
+images/CopyQ.SfheUQ.png
+images/CopyQ.IydNCm.png
+Sources supplémentaires _ Exposé hydre de lerne.pdf
+CLAUDE.md
+CITATIONS_POUR_DIAPORAMA.txt
+SOURCES_ICONOGRAPHIE.txt
+INDEX_IMAGES.txt
+images/catalogue.json
+images/INDEX_IMAGES.txt
+images/Lake_Lerna_poster_p2.png

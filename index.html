@@ -1,0 +1,1878 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>L'Hydre de Lerne - Réception de l'Antiquité</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=IM+Fell+Great+Primer+SC&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+/* ===== RESET ===== */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #0a0a0a;
+  font-family: 'Inter', sans-serif;
+  font-weight: 300;
+  color: #f0f0f0;
+  font-size: 34px;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ===== SLIDE SYSTEM ===== */
+.slide {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  background: #0a0a0a;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.4s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.slide.active {
+  opacity: 1;
+  visibility: visible;
+  z-index: 1;
+}
+
+/* Zoom slides: no extra CSS animation, handled by JS FLIP transition */
+
+/* ===== SLIDE BACKGROUND ===== */
+.slide-bg {
+  position: absolute;
+  inset: 0;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* ===== SLIDE CONTENT ===== */
+.slide-content {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  text-shadow: 0 1px 8px rgba(0,0,0,0.5);
+  align-items: center;
+  justify-content: center;
+}
+
+/* ===== TYPOGRAPHY ===== */
+h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 3.5em;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 0.3em;
+  letter-spacing: 0.02em;
+  line-height: 1.2;
+}
+
+h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.5em;
+  font-weight: 600;
+  color: white;
+  letter-spacing: 0.02em;
+  line-height: 1.2;
+}
+
+h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.8em;
+  font-weight: 600;
+  color: white;
+  margin-bottom: 0.5em;
+  letter-spacing: 0.02em;
+  line-height: 1.2;
+}
+
+h4 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.2em;
+  font-weight: 400;
+  color: #aaa;
+  line-height: 1.2;
+}
+
+p {
+  font-family: 'Inter', sans-serif;
+  font-weight: 300;
+  color: #fff;
+  line-height: 1.7;
+  margin-bottom: 0.4em;
+  font-size: 0.95em;
+}
+
+ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+ul li {
+  line-height: 1.6;
+  font-size: 0.8em;
+  color: #fff;
+}
+
+ul li::before {
+  content: "·";
+  color: #c9a96e;
+  font-weight: 600;
+  margin-right: 0.6em;
+}
+
+em {
+  font-style: italic;
+}
+
+/* ===== CITATIONS ===== */
+.citation {
+  font-family: 'IM Fell Great Primer SC', serif;
+  color: #c9a96e;
+  letter-spacing: 0.08em;
+  line-height: 1.6;
+  font-size: 1.5em;
+}
+
+.citation.large {
+  font-size: 1.4em;
+}
+
+.citation.xlarge {
+  font-size: 1.8em;
+}
+
+.citation-translation {
+  font-family: 'Inter', sans-serif;
+  color: #ccc;
+  font-style: italic;
+  margin-top: 12px;
+}
+
+.citation-source {
+  font-family: 'Inter', sans-serif;
+  color: #666;
+  font-size: 0.6em;
+  margin-top: 8px;
+}
+
+/* ===== LAYOUT: SPLIT (text left + image right) ===== */
+.layout-split {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 60px;
+  max-width: 1600px;
+  width: 90%;
+  height: 100%;
+  padding: 60px;
+  box-sizing: border-box;
+}
+
+.split-text {
+  flex: 1;
+  text-align: left;
+}
+
+.split-image {
+  flex: 0 0 44%;
+  text-align: center;
+}
+
+.split-image img {
+  max-height: 65vh;
+  max-width: 100%;
+  object-fit: contain;
+  border-radius: 4px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.6);
+}
+
+.image-caption {
+  font-family: 'IM Fell Great Primer SC', serif;
+  font-size: 0.55em;
+  color: #c9a96e;
+  text-align: center;
+  margin-top: 0.5em;
+  letter-spacing: 0.05em;
+}
+
+/* ===== LAYOUT: ARTWORK (image + ref + note) ===== */
+.layout-artwork {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding: 40px;
+  box-sizing: border-box;
+}
+
+.layout-artwork img {
+  max-height: 65vh;
+  max-width: 90%;
+  object-fit: contain;
+  border-radius: 4px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.6);
+}
+
+.artwork-ref {
+  font-family: 'IM Fell Great Primer SC', serif;
+  color: #c9a96e;
+  font-size: 0.7em;
+  margin-top: 16px;
+  text-align: center;
+  letter-spacing: 0.05em;
+}
+
+.artwork-note {
+  font-family: 'Inter', sans-serif;
+  color: #bbb;
+  font-size: 0.6em;
+  margin-top: 8px;
+  text-align: center;
+  max-width: 60%;
+}
+
+/* ===== LAYOUT: TEXT ===== */
+.layout-text {
+  max-width: 1200px;
+  width: 85%;
+  padding: 60px;
+  box-sizing: border-box;
+  text-align: left;
+}
+
+.layout-text.centered {
+  text-align: center;
+}
+
+/* ===== LAYOUT: TEXT-WIDE (for content-heavy text slides) ===== */
+.layout-text-wide {
+  max-width: 1400px;
+  width: 90%;
+  padding: 40px 60px;
+  box-sizing: border-box;
+  text-align: left;
+}
+
+/* ===== LAYOUT: GRID ===== */
+.layout-grid {
+  display: grid;
+  gap: 24px;
+  align-items: end;
+  justify-items: center;
+  padding: 40px;
+  max-width: 90%;
+}
+
+.layout-grid.cols-2 {
+  grid-template-columns: 1fr 1fr;
+  max-width: 80%;
+}
+
+.layout-grid.cols-3 {
+  grid-template-columns: 1fr 1fr 1fr;
+  max-width: 90%;
+}
+
+.layout-grid img {
+  max-height: 50vh;
+  max-width: 100%;
+  object-fit: contain;
+  border-radius: 3px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.5);
+}
+
+.grid-item {
+  text-align: center;
+}
+
+.grid-caption {
+  font-size: 0.55em;
+  color: #888;
+  text-align: center;
+  margin-top: 8px;
+}
+
+/* ===== LAYOUT: COMPARISON ===== */
+.layout-comparison {
+  display: flex;
+  gap: 40px;
+  align-items: flex-start;
+  justify-content: center;
+  max-width: 1200px;
+  padding: 40px;
+}
+
+.comp-item {
+  flex: 1;
+  text-align: center;
+}
+
+.comp-item img {
+  max-height: 50vh;
+  max-width: 100%;
+  object-fit: contain;
+  border-radius: 3px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.5);
+}
+
+.comp-label {
+  color: #888;
+  margin-top: 12px;
+  font-size: 0.6em;
+}
+
+/* ===== LAYOUT: IMAGE+TABLE SIDE BY SIDE ===== */
+.layout-img-table {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3em;
+  max-width: 1400px;
+  width: 90%;
+  padding: 40px;
+  box-sizing: border-box;
+}
+
+.layout-img-table .img-col {
+  flex: 0 0 40%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.layout-img-table .img-col img {
+  max-height: 55vh;
+  max-width: 100%;
+  object-fit: contain;
+  border-radius: 3px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.5);
+}
+
+.layout-img-table .table-col {
+  flex: 1;
+  font-size: 0.85em;
+}
+
+/* ===== SECTION TITLES ===== */
+.section-title {
+  text-align: center;
+}
+
+.section-title h2 {
+  font-size: 3em;
+}
+
+.section-title h2::after {
+  content: "";
+  display: block;
+  width: 120px;
+  height: 2px;
+  background: #c9a96e;
+  margin: 0.4em auto 0;
+}
+
+.section-title h4 {
+  color: #888;
+  font-style: italic;
+  margin-top: 0.3em;
+}
+
+.small-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.6em;
+  color: #c9a96e;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-bottom: 0.5em;
+}
+
+/* ===== TABLES ===== */
+table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 0.75em;
+  margin: 0.5em 0;
+}
+
+th {
+  color: #c9a96e;
+  font-family: 'Cormorant Garamond', serif;
+  text-align: left;
+  padding: 8px 16px;
+  border-bottom: 2px solid #a08550;
+  font-weight: 600;
+  font-size: 1.1em;
+}
+
+td {
+  color: #fff;
+  padding: 8px 16px;
+  border-bottom: 1px solid #333;
+  vertical-align: top;
+}
+
+tr:last-child td {
+  border-bottom: none;
+}
+
+/* ===== VENIN CHAIN ===== */
+.venin-chain {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.chain-item {
+  background: rgba(201,169,110,0.08);
+  border: 1px solid #a08550;
+  border-radius: 20px;
+  padding: 8px 20px;
+  font-size: 0.75em;
+  color: #e0e0e0;
+  white-space: nowrap;
+}
+
+.chain-arrow {
+  color: #c9a96e;
+  font-size: 1.2em;
+}
+
+/* ===== TIMELINE BAR ===== */
+.timeline-bar {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  justify-content: center;
+  margin-top: 1.5em;
+  font-size: 0.55em;
+  color: #888;
+}
+
+.tl-label {
+  margin: 0 0.3em;
+  white-space: nowrap;
+}
+
+.tl-dot {
+  width: 8px;
+  height: 8px;
+  background: #c9a96e;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.tl-line {
+  width: 40px;
+  height: 1px;
+  background: #a08550;
+  flex-shrink: 0;
+}
+
+/* ===== HIGHLIGHT ===== */
+.gold { color: #c9a96e; }
+.muted { color: #aaa; }
+.highlight { color: #c9a96e; font-weight: 500; }
+.small { font-size: 0.7em; }
+.very-small { font-size: 0.55em; }
+.text-center { text-align: center; }
+.mt-1 { margin-top: 0.5em; }
+.mt-2 { margin-top: 1em; }
+.mt-3 { margin-top: 1.5em; }
+.mb-1 { margin-bottom: 0.5em; }
+
+.highlight-box {
+  background: rgba(201,169,110,0.08);
+  border-left: 3px solid #c9a96e;
+  padding: 12px 20px;
+  margin-top: 1em;
+  border-radius: 0 4px 4px 0;
+}
+
+/* ===== SCHEMA BLOCKS ===== */
+.schema-container {
+  display: flex;
+  gap: 60px;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.schema-block {
+  text-align: center;
+  margin: 0.8em 0;
+}
+
+.schema-label {
+  color: #c9a96e;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.1em;
+  margin-bottom: 0.4em;
+}
+
+.schema-separator {
+  width: 60%;
+  height: 1px;
+  background: #333;
+  margin: 1.2em auto;
+}
+
+/* ===== BIB LIST ===== */
+.bib-list {
+  font-size: 0.6em;
+  color: #888;
+  text-align: left;
+  max-width: 70%;
+  margin: 1.5em auto 0;
+}
+
+.bib-list li {
+  margin-bottom: 0.3em;
+  font-size: 1em;
+}
+
+.bib-list li::before {
+  content: "-";
+  color: #a08550;
+  margin-right: 0.5em;
+}
+
+/* ===== TITLE SLIDE ===== */
+.title-slide h1 {
+  font-size: 4em;
+  margin-bottom: 0.1em;
+}
+
+.title-slide .subtitle {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.1em;
+  color: #888;
+  font-weight: 300;
+  margin-top: 0.3em;
+}
+
+.title-slide .course-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.7em;
+  color: #c9a96e;
+  margin-top: 2em;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* ===== ZOOM SLIDE OVERLAY CAPTION ===== */
+.zoom-caption {
+  position: absolute;
+  bottom: 50px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  padding: 0 10%;
+  z-index: 2;
+}
+
+.zoom-caption .citation {
+  font-size: 1.1em;
+  opacity: 0.85;
+}
+
+/* ===== SLIDE COUNTER ===== */
+#slide-counter {
+  position: fixed;
+  bottom: 12px;
+  right: 24px;
+  color: #555;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  z-index: 50;
+}
+
+/* ===== SECTION INDICATOR ===== */
+#section-indicator {
+  position: fixed;
+  top: 20px;
+  right: 28px;
+  color: #c9a96e;
+  font-family: 'IM Fell Great Primer SC', serif;
+  font-size: 15px;
+  letter-spacing: 0.06em;
+  z-index: 50;
+  opacity: 0.7;
+  transition: opacity 0.3s ease;
+}
+#section-indicator:empty {
+  opacity: 0;
+}
+
+/* ===== NOTES PANEL ===== */
+#notes-panel {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0,0,0,0.9);
+  color: #aaa;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  padding: 12px 24px;
+  z-index: 50;
+  display: none;
+  border-top: 1px solid #333;
+}
+
+#notes-panel.visible {
+  display: block;
+}
+
+/* ===== OVERVIEW MODE ===== */
+#presentation.overview {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 20px;
+  overflow-y: auto;
+  align-content: flex-start;
+  justify-content: center;
+  background: #111;
+  z-index: 100;
+}
+
+#presentation.overview .slide {
+  position: relative !important;
+  inset: auto !important;
+  zoom: 0.18;
+  opacity: 1 !important;
+  visibility: visible !important;
+  cursor: pointer;
+  outline: 3px solid transparent;
+  outline-offset: -3px;
+  transition: outline-color 0.2s;
+}
+
+#presentation.overview .slide:hover {
+  outline-color: #444;
+}
+
+#presentation.overview .slide.active {
+  outline-color: #c9a96e;
+}
+</style>
+</head>
+
+<body>
+
+<div id="presentation">
+
+<!-- ==================== SLIDE 1: TITLE ==================== -->
+<div class="slide"
+     data-bg="images/Hercules_and_the_Lernaean_Hydra,_1875-1876,_by_Gustave_Moreau_-_Art_Institute_of_Chicago_-_DSC09590.jpg"
+     data-bg-opacity="0.3"
+     data-notes="Accroche avec le tableau de Moreau en fond. 30 secondes.">
+  <div class="slide-content">
+    <div class="layout-text centered title-slide">
+      <h1 style="text-shadow: 0 2px 20px rgba(0,0,0,0.8);">L'Hydre de Lerne</h1>
+      <p class="subtitle" style="color: #fff; font-size: 1.2em; text-shadow: 0 2px 15px rgba(0,0,0,0.8);">Du monstre mythique à la métaphore politique et scientifique</p>
+      <p class="course-label" style="text-shadow: 0 2px 10px rgba(0,0,0,0.8);">Réception de l'Antiquité</p>
+      <p style="margin-top: 1.5em; font-size: 0.6em; color: #ddd; letter-spacing: 0.03em; text-shadow: 0 2px 10px rgba(0,0,0,0.8);">Présenté par Louis Dumontier, Yousra El Hakiri, Lalla Wijdan Zine-Eddine, Arin Kaya et Sara Cherqaoui</p>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 2: PROBLÉMATIQUE ==================== -->
+<div class="slide"
+     data-bg="images/01_Amphore_attique_Louvre_E851_Herakles_Hydre.jpg"
+     data-bg-opacity="0.08"
+     data-notes="Énoncer la problématique clairement. 1 min 30.">
+  <div class="slide-content">
+    <div class="layout-text centered">
+      <p class="citation large" style="max-width: 80%; margin: 0 auto;">Comment un monstre de la mythologie grecque est-il devenu une figure universelle pour désigner ce qu'on ne peut pas éradiquer ?</p>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 3: PLAN ==================== -->
+<div class="slide"
+     data-bg="images/Hercules_and_the_Lernaean_Hydra,_1875-1876,_by_Gustave_Moreau_-_Art_Institute_of_Chicago_-_DSC09590.jpg"
+     data-bg-opacity="0.06"
+     data-notes="Présenter le plan clairement. Insister sur le fait que la partie III est l'aspect approfondi.">
+  <div class="slide-content">
+    <div class="layout-text" style="max-width: 1200px;">
+      <h2 style="font-family: 'Cormorant Garamond', serif; margin-bottom: 1em;">Plan</h2>
+      <div style="text-align: left; font-family: 'Inter', sans-serif; font-size: 1.1em; line-height: 1.8;">
+
+        <p style="margin-bottom: 0.2em;"><span style="color: #c9a96e; font-family: 'Cormorant Garamond', serif; font-size: 1.2em; font-weight: 600;">I.</span> Le mythe antique : sources et variations</p>
+        <p style="padding-left: 2em; font-size: 0.75em; color: #aaa; margin-bottom: 0.1em;">a) Sources littéraires : d'Hésiode à Apollodore</p>
+        <p style="padding-left: 2em; font-size: 0.75em; color: #aaa; margin-bottom: 0.1em;">b) Le venin : fil rouge mythologique</p>
+        <p style="padding-left: 2em; font-size: 0.75em; color: #aaa; margin-bottom: 0.8em;">c) Iconographie antique et influences orientales</p>
+
+        <p style="margin-bottom: 0.2em;"><span style="color: #c9a96e; font-family: 'Cormorant Garamond', serif; font-size: 1.2em; font-weight: 600;">II.</span> Interprétations du mythe : que représente l'Hydre ?</p>
+        <p style="padding-left: 2em; font-size: 0.75em; color: #aaa; margin-bottom: 0.1em;">a) Lecture naturaliste : le système karstique de Lerne</p>
+        <p style="padding-left: 2em; font-size: 0.75em; color: #aaa; margin-bottom: 0.1em;">b) Lecture rituelle : les Mystères de Lerne</p>
+        <p style="padding-left: 2em; font-size: 0.75em; color: #aaa; margin-bottom: 0.8em;">c) Lecture héroïque : le motif du dragon-slaying</p>
+
+        <p style="margin-bottom: 0.2em;"><span style="color: #c9a96e; font-family: 'Cormorant Garamond', serif; font-size: 1.2em; font-weight: 600;">III.</span> La réception post-antique : l'Hydre comme métaphore <span style="color: #c9a96e; font-size: 0.65em; font-style: italic;">- aspect approfondi</span></p>
+        <p style="padding-left: 2em; font-size: 0.75em; color: #aaa; margin-bottom: 0.1em;">a) Moyen Âge : bestiaires et théologie</p>
+        <p style="padding-left: 2em; font-size: 0.75em; color: #aaa; margin-bottom: 0.1em;">b) Renaissance : Alciato et l'art de l'emblème</p>
+        <p style="padding-left: 2em; font-size: 0.75em; color: #aaa; margin-bottom: 0.1em;">c) L'Hydre politique : de Louis XIV à la Commune</p>
+        <p style="padding-left: 2em; font-size: 0.75em; color: #aaa; margin-bottom: 0.1em;">d) Science : du mythe à la biologie de l'immortalité</p>
+        <p style="padding-left: 2em; font-size: 0.75em; color: #aaa; margin-bottom: 0.1em;">e) Pop culture et comparaison interculturelle</p>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 4: SECTION I TITLE ==================== -->
+<div class="slide" data-section="I. Le mythe antique"
+     data-bg="images/01_Amphore_attique_Louvre_E851_Herakles_Hydre.jpg"
+     data-bg-opacity="0.25"
+     data-notes="Transition vers partie I. 5 minutes pour cette partie.">
+  <div class="slide-content">
+    <div class="section-title">
+      <h2>I. Le mythe antique</h2>
+      <h4>Sources et variations</h4>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 5: SOURCES LITTÉRAIRES ==================== -->
+<div class="slide" data-section="I. Le mythe antique"
+     data-bg="images/03_Hydre_Louvre_CA7318.jpg"
+     data-bg-opacity="0.08"
+     data-notes="Montrer la variabilité des sources. Le nombre de têtes n'est jamais fixé.">
+  <div class="slide-content">
+    <div class="layout-text-wide">
+      <h3>Les sources littéraires</h3>
+      <div class="mt-2">
+        <p><span class="gold">Hésiode</span> (<em>Théogonie</em>, ~700 av. J.-C.) : fille de Typhon et Échidna, <em>λυγρὰ ἰδυῖα</em>, instrument de la haine d'Héra</p>
+        <p><span class="gold">Alcée</span> (VIe s.) : 9 têtes / <span class="gold">Simonide</span> : 50 / <span class="gold">Diodore</span> : 100</p>
+        <p><span class="gold">Apollodore</span> : 9 dont 1 immortelle - récit le plus détaillé</p>
+        <p><span class="gold">Eurysthée</span> refuse de compter ce travail (aide d'Iolaos)</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 6: CITATION EURIPIDE ==================== -->
+<div class="slide" data-section="I. Le mythe antique"
+     data-bg="images/02_Hydre_Louvre_CA598.jpg"
+     data-bg-opacity="0.06"
+     data-notes="Insister : la régénération, qui fait TOUTE la postérité du mythe, est un ajout tardif.">
+  <div class="slide-content">
+    <div class="layout-text centered">
+      <p class="citation xlarge">μυριόκρανος πολύφονος κύων</p>
+      <p class="citation-translation" style="font-size: 1em;">« Chienne aux mille têtes, avide de sang »</p>
+      <p class="citation-source mt-1">Euripide, <em>Héraclès furieux</em>, Ve s. av. J.-C.</p>
+      <div class="highlight-box mt-3" style="max-width: 70%; margin-left: auto; margin-right: auto;">
+        <p>Premier auteur à mentionner la cautérisation par Iolaos : le motif de la régénération est comparativement tardif</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 7: SOPHOCLE ==================== -->
+<div class="slide" data-section="I. Le mythe antique"
+     data-bg="images/04_Hydre_vase_Nationalmuseet_B96.jpg"
+     data-bg-opacity="0.06"
+     data-notes="Sophocle donne la dimension la plus terrifiante. Transition vers le venin.">
+  <div class="slide-content">
+    <div class="layout-text centered">
+      <p class="citation large">δεινοτάτῳ μὲν ὕδρας<br>προστετακὼς φάσματι</p>
+      <p class="citation-translation" style="font-size: 1em;">« Terrible, l'Ombre de l'Hydre est là, collée à lui... »</p>
+      <p class="citation-source mt-1">Sophocle, <em>Trachiniennes</em></p>
+      <div class="mt-3" style="max-width: 70%; margin-left: auto; margin-right: auto; text-align: left;">
+        <p>Même morte, l'Hydre se régénère dans le corps d'Héraclès via le venin (tunique de Nessos).</p>
+        <p class="highlight" style="font-style: italic;">Celui qui combat les dragons devient lui-même un dragon.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 8: LE VENIN - FIL ROUGE ==================== -->
+<div class="slide" data-section="I. Le mythe antique"
+     data-bg="images/Amphore grecque représentant hercules combattant l'hydre de lerne.jpg"
+     data-bg-opacity="0.06"
+     data-notes="Le venin traverse TOUTE la mythologie grecque. Un fil conducteur depuis l'Hydre jusqu'à la chute de Troie.">
+  <div class="slide-content">
+    <div class="layout-text centered">
+      <h3>Le venin : fil rouge mythologique</h3>
+      <div class="venin-chain mt-3">
+        <span class="chain-item">Hydre</span>
+        <span class="chain-arrow">→</span>
+        <span class="chain-item">Flèches empoisonnées</span>
+        <span class="chain-arrow">→</span>
+        <span class="chain-item">Nessos</span>
+        <span class="chain-arrow">→</span>
+        <span class="chain-item">Tunique</span>
+        <span class="chain-arrow">→</span>
+        <span class="chain-item">Mort d'Héraclès</span>
+        <span class="chain-arrow">→</span>
+        <span class="chain-item">Arc de Philoctète</span>
+        <span class="chain-arrow">→</span>
+        <span class="chain-item">Fin de la guerre de Troie</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 9: INFLUENCES ORIENTALES ==================== -->
+<div class="slide" data-section="I. Le mythe antique"
+     data-bg="images/sceau akkadien de Tell Asmar  2500 AV JC.png"
+     data-bg-opacity="0.1"
+     data-notes="Le mythe grec s'inscrit dans une tradition orientale millénaire.">
+  <div class="slide-content">
+    <div class="layout-split">
+      <div class="split-text">
+        <h3>Influences orientales</h3>
+        <div class="mt-2">
+          <p><span class="gold">Sceau akkadien de Tell Asmar</span> (~2500 av. J.-C.) : dieu de la fertilité vs dragon à 7 têtes</p>
+          <p><span class="gold">Mythologie ougaritique</span> : Baal vs Lotan (serpent à 7 têtes)</p>
+          <p><span class="gold">Mythologie hébraïque</span> : Yahwé vs Léviathan (Psaume 74)</p>
+        </div>
+        <div class="highlight-box mt-3">
+          <p>Le motif du combat héros/dragon polycéphale est antérieur de plus de 2000 ans au mythe grec</p>
+        </div>
+      </div>
+      <div class="split-image">
+        <div style="display: flex; flex-direction: column; gap: 16px; align-items: center;">
+          <div>
+            <img src="images/sceau akkadien de Tell Asmar  2500 AV JC.png" alt="Sceau akkadien de Tell Asmar" style="max-height: 30vh;">
+            <p class="image-caption">Sceau cylindre akkadien, Tell Asmar, ~2500 av. J.-C.</p>
+          </div>
+          <div>
+            <img src="images/terre cuite mesopotamie.png" alt="Plaquette en terre cuite mésopotamienne" style="max-height: 30vh;">
+            <p class="image-caption">Plaquette en terre cuite, Mésopotamie, ~2500-2000 av. J.-C.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 9b: INFLUENCES ORIENTALES ZOOM ==================== -->
+<div class="slide zoom-slide" data-section="I. Le mythe antique"
+     data-notes="Laisser observer les deux objets mésopotamiens. Montrer l'ancienneté du motif.">
+  <div class="slide-content">
+    <div style="display: flex; align-items: center; justify-content: center; gap: 60px; height: 100%; padding: 40px;">
+      <div style="text-align: center;">
+        <img src="images/sceau akkadien de Tell Asmar  2500 AV JC.png" alt="Sceau de Tell Asmar" style="max-height: 70vh; max-width: 100%; object-fit: contain;">
+        <p class="image-caption">Sceau cylindre, Tell Asmar, ~2500 av. J.-C.</p>
+      </div>
+      <div style="text-align: center;">
+        <img src="images/terre cuite mesopotamie.png" alt="Plaquette en terre cuite" style="max-height: 70vh; max-width: 100%; object-fit: contain;">
+        <p class="image-caption">Terre cuite, Mésopotamie, ~2500-2000 av. J.-C.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 10: ICONOGRAPHIE - INTRO ==================== -->
+<div class="slide" data-section="I. Le mythe antique"
+     data-notes="Présenter l'évolution iconographique avant de montrer les vases.">
+  <div class="slide-content">
+    <div class="layout-split">
+      <div class="split-text">
+        <h3>L'iconographie antique</h3>
+        <h4 class="muted">Gibbons + Gilis &amp; Verbanck-Piérard</h4>
+        <div class="mt-2" style="font-size: 0.85em; line-height: 1.8;">
+          <p>Plus anciennes représentations : fibules béotiennes en bronze (~VIIIe s. av. J.-C.)</p>
+          <p>Évolution des armes : épée → faucille/serpe → massue → arc → tison</p>
+          <p>Le tison n'apparaît en art que fin VIe s., bien qu'Euripide soit la première source littéraire</p>
+          <p>Constance iconographique remarquable sur plus de 6 siècles</p>
+        </div>
+      </div>
+      <div class="split-image">
+        <div>
+          <img src="images/09_Amphore_attique_Tarquinia_560-540_av_JC - high quality.jpg" alt="Amphore attique de Tarquinia">
+          <p class="image-caption">Amphore attique de Tarquinia, 560-540 av. J.-C.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 11: VASES SECONDAIRES ==================== -->
+<div class="slide" data-section="I. Le mythe antique"
+     data-notes="Montrer rapidement la diversité des représentations.">
+  <div class="slide-content">
+    <div class="layout-grid cols-3">
+      <div class="grid-item">
+        <img src="images/09_Amphore_attique_Tarquinia_560-540_av_JC - high quality.jpg" alt="Amphore de Tarquinia">
+        <p class="grid-caption">Amphore de Tarquinia, 560-540 av. J.-C.</p>
+      </div>
+      <div class="grid-item">
+        <img src="images/02_Hydre_Louvre_CA598.jpg" alt="Louvre CA 598">
+        <p class="grid-caption">Louvre CA 598, VIe s. av. J.-C.</p>
+      </div>
+      <div class="grid-item">
+        <img src="images/04_Hydre_vase_Nationalmuseet_B96.jpg" alt="Nationalmuseet Copenhague">
+        <p class="grid-caption">Nationalmuseet, Copenhague</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 12: HYDRIE CÉRÉTAINE - INTRO ==================== -->
+<div class="slide" data-section="I. Le mythe antique"
+     data-notes="Oeuvre clé : tous les éléments du mythe sont présents.">
+  <div class="slide-content">
+    <div class="layout-split">
+      <div class="split-text">
+        <h3>Hydrie cérétaine</h3>
+        <p class="muted">Getty Museum (83.AE.346)</p>
+        <p class="muted">520-510 av. J.-C.</p>
+        <p class="muted mb-1">Attribuée au « Peintre de l'Aigle »</p>
+        <p class="mt-2">Héraklès en cuirasse et jambières</p>
+        <p>Iolaos utilise une serpe pour trancher les têtes</p>
+        <p>Le crabe géant pince le talon d'Héraklès</p>
+      </div>
+      <div class="split-image">
+        <div>
+          <img src="images/Caeretan Hydria 520 510 BC.jpg" alt="Hydrie cérétaine, Getty Museum">
+          <p class="image-caption">Hydrie cérétaine, Getty Museum</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 13: HYDRIE CÉRÉTAINE - ZOOM ==================== -->
+<div class="slide zoom-slide" data-section="I. Le mythe antique"
+     data-bg="images/Caeretan Hydria 520 510 BC.jpg"
+     data-bg-opacity="1"
+     data-bg-size="contain"
+     data-notes="Laisser le public observer les détails.">
+  <div class="slide-content"></div>
+</div>
+
+<!-- ==================== SLIDE 13b: MOSAÏQUE ROMAINE ==================== -->
+<div class="slide zoom-slide" data-section="I. Le mythe antique"
+     data-notes="Mosaïque romaine du IIIe s. - montre la continuité du motif dans l'art romain et la diversité des supports (pas seulement des vases).">
+  <div class="slide-content">
+    <div class="layout-artwork">
+      <img src="images/mosaique romaine heracles vs hydre.png" alt="Mosaïque romaine, Héraclès combattant l'Hydre de Lerne">
+      <p class="artwork-ref">Mosaïque romaine, IIIe s. ap. J.-C., Liria (Valence, Espagne), Musée archéologique national, Madrid</p>
+      <p class="artwork-note">Héraclès combattant l'Hydre de Lerne - le motif perdure dans l'art romain</p>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== MOSAÏQUE GALLO-ROMAINE ==================== -->
+<div class="slide zoom-slide" data-section="I. Le mythe antique"
+     data-notes="Mosaïque gallo-romaine trouvée en France. Montrer la diffusion du motif dans tout l'Empire.">
+  <div class="slide-content">
+    <div class="layout-artwork">
+      <img src="images/06_mosaique_dhercule_lhydre_de_lerne.jpg" alt="Mosaïque gallo-romaine, l'Hydre de Lerne">
+      <p class="artwork-ref">Mosaïque d'Hercule, l'Hydre de Lerne, 170-180 ap. J.-C., Saint-Paul-lès-Romans (Drôme)</p>
+      <p class="artwork-note">Marbre, terre cuite, pâte de verre. Villa des Mingauds. Classée Monument historique.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 14: POINT CLÉ ==================== -->
+<div class="slide" data-section="I. Le mythe antique"
+     data-bg="images/Caeretan Hydria 520 510 BC.jpg"
+     data-bg-opacity="0.08"
+     data-notes="Opposition fondamentale. Transition vers les interprétations.">
+  <div class="slide-content">
+    <div class="layout-text centered">
+      <p class="citation large">« L'Hydre ne garde rien, ne protège rien »</p>
+      <div class="mt-3" style="max-width: 70%; margin-left: auto; margin-right: auto; text-align: left;">
+        <p>≠ le Serpent des Hespérides, gardien sacré d'un lieu divin</p>
+        <p><span class="highlight">L'Hydre = chaos négatif, stérilité, danger. Aucune équivoque.</span></p>
+      </div>
+      <p class="citation-source mt-2">Gilis &amp; Verbanck-Piérard</p>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 15: SECTION II TITLE ==================== -->
+<div class="slide" data-section="II. Interprétations"
+     data-bg="images/12_Lerne_site_archeologique.jpg"
+     data-bg-opacity="0.3"
+     data-notes="5 minutes pour cette partie.">
+  <div class="slide-content">
+    <div class="section-title">
+      <h2>II. Interprétations du mythe</h2>
+      <h4>Que représente l'Hydre ?</h4>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 16: LECTURE GÉOLOGIQUE ==================== -->
+<div class="slide" data-section="II. Interprétations"
+     data-bg="images/12_Lerne_site_archeologique.jpg"
+     data-bg-opacity="0.15"
+     data-notes="Le tableau est très parlant. Montrer la correspondance terme à terme.">
+  <div class="slide-content">
+    <div class="layout-text-wide">
+      <h3>Lecture naturaliste : le système karstique de Lerne</h3>
+      <table class="mt-1" style="max-width: 85%;">
+        <thead>
+          <tr><th>Mythe</th><th>Géologie</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Têtes multiples</td><td>Sources et gouffres karstiques</td></tr>
+          <tr><td>Couper une tête</td><td>Boucher un gouffre</td></tr>
+          <tr><td>Deux têtes repoussent</td><td>L'eau ressort ailleurs</td></tr>
+          <tr><td>Cautériser au feu</td><td>Brûler la végétation pour localiser les gouffres</td></tr>
+        </tbody>
+      </table>
+      <p class="small mt-1">Thivaiou et al. : datation C14 ~3200 BP - coïncide avec la naissance du mythe</p>
+      <p class="citation mt-1" style="font-size: 1em;">« locum evomentem aquas » - un lieu vomissant des eaux <span class="citation-source">(Servius)</span></p>
+      <p class="small mt-1"><em>ὕδωρ</em> (hydor) = eau → <span class="highlight">Hydre = « la créature d'eau »</span></p>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 17: LECTURE RITUELLE ==================== -->
+<div class="slide" data-section="II. Interprétations"
+     data-bg="images/12_Lerne_site_archeologique.jpg"
+     data-bg-opacity="0.08"
+     data-notes="Ruck est controversé mais fascinant. Ne pas s'attarder trop.">
+  <div class="slide-content">
+    <div class="layout-text-wide">
+      <h3>Lecture rituelle <span class="muted">(Ruck)</span></h3>
+      <div class="mt-2">
+        <p>Lac Alcyon = entrée des Enfers, profondeur « sans limite »</p>
+        <p>Mystères de Lerne : rites nocturnes dédiés à Déméter, pratiqués jusqu'à l'époque romaine</p>
+        <p>Dionysos y descend pour ressusciter sa mère Sémélé</p>
+        <p>Lien avec les Danaïdes : 50 filles, 100 sources = 1 par tête</p>
+        <p class="highlight">L'Hydre = possible zoomorphisme d'une substance psychoactive</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 18: LECTURE HÉROÏQUE ==================== -->
+<div class="slide" data-section="II. Interprétations"
+     data-bg="images/03_Hydre_Louvre_CA7318.jpg"
+     data-bg-opacity="0.06"
+     data-notes="Transition vers la partie III - la plus importante.">
+  <div class="slide-content">
+    <div class="layout-text-wide">
+      <h3>Lecture héroïque et symbolique</h3>
+      <div class="mt-2">
+        <p>Motif indo-européen du <em>dragon-slaying</em> : Marduk/Tiamat, Baal/Lotan, Yahwé/Léviathan</p>
+        <p>Héros vs monstre = <span class="highlight">ordre civilisé vs chaos</span></p>
+      </div>
+      <div class="mt-2">
+        <p class="citation" style="font-size: 1.2em;">« L'Hydre est trop proche de l'eschatia, Héraclès doit la détruire et repousser les limites »</p>
+        <p class="citation-source">Gilis &amp; Verbanck-Piérard</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 19: SECTION III TITLE ==================== -->
+<div class="slide" data-section="III. Réception post-antique"
+     data-bg="images/Hercules_and_the_Lernaean_Hydra,_1875-1876,_by_Gustave_Moreau_-_Art_Institute_of_Chicago_-_DSC09590.jpg"
+     data-bg-opacity="0.1"
+     data-notes="6 minutes pour cette partie - le coeur de l'exposé.">
+  <div class="slide-content">
+    <div class="section-title">
+      <h2 style="font-size: 3em;">III. La réception post-antique</h2>
+      <h4>L'Hydre comme métaphore</h4>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 20: TRANSITION QUOTE ==================== -->
+<div class="slide" data-section="III. Réception post-antique"
+     data-bg="images/enluminure%20m%C3%A9di%C3%A9vale.jpg"
+     data-bg-opacity="0.08"
+     data-notes="Citation clé qui lance toute la partie III.">
+  <div class="slide-content">
+    <div class="layout-text centered">
+      <p class="citation xlarge" style="max-width: 75%; margin: 0 auto;">« L'Hydre finira par personnifier les vices, toujours renaissants, et l'hérésie. »</p>
+      <p class="citation-source mt-1">Gilis &amp; Verbanck-Piérard</p>
+      <p class="mt-3" style="max-width: 65%; margin-left: auto; margin-right: auto;">Le christianisme fait du Serpent le Mal absolu. L'Hydre perd toute ambiguïté.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 21: ENLUMINURE MÉDIÉVALE (plein écran zoom) ==================== -->
+<div class="slide zoom-slide" data-section="III. Réception post-antique"
+     data-notes="Montrer l'enluminure en détail avant de présenter le contexte médiéval.">
+  <div class="slide-content">
+    <div class="layout-artwork">
+      <img src="images/enluminure m%C3%A9di%C3%A9vale zoom.png" alt="Enluminure médiévale, BnF, zoom" style="max-height: 75vh;">
+      <p class="artwork-ref" style="font-family: 'IM Fell Great Primer SC', serif; color: #c9a96e;">Manuscrit enluminé, BnF, Français 22552 f.160, XVe s.</p>
+      <p class="artwork-note">Le monstre christianisé : l'Hydre comme symbole du Mal vaincu par Hercule</p>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 22: MOYEN ÂGE (contexte) ==================== -->
+<div class="slide" data-section="III. Réception post-antique"
+     data-bg="images/enluminure m%C3%A9di%C3%A9vale.jpg"
+     data-bg-opacity="0.1"
+     data-notes="Montrer la transformation : de serpent antique à dragon médiéval.">
+  <div class="slide-content">
+    <div class="layout-split">
+      <div class="split-text">
+        <h3>Moyen Âge : bestiaires et théologie</h3>
+        <p class="mt-2">L'Hydre confondue avec l'<em>hydrus</em> (serpent d'eau qui tue le crocodile), représentée comme dragon ailé</p>
+        <p>Associée au Dragon de l'Apocalypse à 7 têtes</p>
+        <p class="highlight">La régénération = parodie démoniaque de la résurrection, persistance du vice</p>
+        <p class="mt-2 muted">Bestiaires : Northumberland (~1250), Fountains Abbey (~1325)</p>
+      </div>
+      <div class="split-image">
+        <div>
+          <img src="images/Bestiaire du Northumberland - vers 1250 1260.png" alt="Bestiaire du Northumberland">
+          <p class="image-caption">Bestiaire du Northumberland, ~1250</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== POLLAIUOLO (~1475) ==================== -->
+<div class="slide zoom-slide" data-section="III. Réception post-antique"
+     data-notes="Pollaiuolo : dynamisme musculaire Renaissance. Première grande peinture du motif.">
+  <div class="slide-content">
+    <div class="layout-artwork">
+      <img src="images/05_Pollaiuolo_Hercule_Hydre_Uffizi_1475.jpg" alt="Pollaiuolo, Ercole e l'Idra">
+      <p class="artwork-ref">Antonio del Pollaiuolo, <em>Ercole e l'Idra</em>, ~1475, Offices, Florence</p>
+      <p class="artwork-note">Retour à l'Antique, dynamisme musculaire Renaissance, Hercule comme figure humaniste</p>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== ALCIATO INTRO (1531-1550) ==================== -->
+<div class="slide" data-section="III. Réception post-antique"
+     data-notes="Expliquer le concept d'emblème : motto + pictura + subscriptio.">
+  <div class="slide-content">
+    <div class="layout-split">
+      <div class="split-text">
+        <h3>Andrea Alciato, <em>Emblematum Liber</em></h3>
+        <p class="muted">Emblème 136 : <em>Duodecim Certamina Herculis</em></p>
+        <p class="muted mb-1">Invention du genre du livre d'emblèmes</p>
+        <p class="mt-2">L'Hydre = le vice qui se multiplie quand on ne l'éradique pas</p>
+        <p>Allégorie humaniste : Hercule = le sage triomphant de la folie</p>
+      </div>
+      <div class="split-image">
+        <div>
+          <img src="images/Alciato_Embleme136_Duodecim_Certamina_Herculis_Lyon_Eskrich_1550.png" alt="Alciato, édition Lyon 1550">
+          <p class="image-caption">Édition latine, Lyon, 1550 (Pierre Eskrich)</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== ALCIATO ZOOM - ÉVOLUTION (1550 vs 1615) ==================== -->
+<div class="slide zoom-slide" data-section="III. Réception post-antique"
+     data-notes="Montrer le GLISSEMENT VISUEL. Les têtes humaines = vices humains. Pont vers l'Hydre aristocratique de 1789.">
+  <div class="slide-content">
+    <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px; width: 90%;">
+      <div class="layout-comparison" style="max-width: 1200px; margin: 1em auto;">
+        <div class="comp-item">
+          <img src="images/Alciato_Embleme136_Duodecim_Certamina_Herculis_Lyon_Eskrich_1550.png" alt="Alciato 1550">
+          <p class="comp-label">1550 - têtes de serpent</p>
+        </div>
+        <div class="comp-item">
+          <img src="images/Alciato_Embleme136_Duodecim_Certamina_Herculis_Najera_1615.png" alt="Alciato 1615">
+          <p class="comp-label">1615 - têtes humanoïdes</p>
+        </div>
+      </div>
+      <p class="text-center mt-1">En 65 ans, le monstre mythique devient une figure allégorique explicitement moralisée</p>
+      <p class="citation text-center mt-1" style="font-size: 1.1em;">« Par Hercules est signifiée vertueuse eloquence avec sagesse »</p>
+      <p class="citation-source text-center">Barthélemy Aneau, traduction française, 1558</p>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== BEHAM (1545) ==================== -->
+<div class="slide zoom-slide" data-section="III. Réception post-antique"
+     data-notes="Beham : gravure maniériste, Hercule et Iolaos ensemble.">
+  <div class="slide-content">
+    <div class="layout-artwork">
+      <img src="images/hercules combattant hydre de lerne 1545 beham hans sebald - AGO572942-000_PE.png" alt="Beham, Hercules una cum Iolao Hydram occidit">
+      <p class="artwork-ref">Hans Sebald Beham, <em>Hercules una cum Iolao Hydram occidit</em>, 1545</p>
+      <p class="artwork-note">Gravure maniériste montrant Hercule et Iolaos combattant ensemble l'Hydre</p>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== ZURBARÁN (1634) ==================== -->
+<div class="slide zoom-slide" data-section="III. Réception post-antique"
+     data-notes="Zurbarán : Hercule comme figure du pouvoir royal espagnol.">
+  <div class="slide-content">
+    <div class="layout-artwork">
+      <img src="images/06_Zurbaran_Hercule_Hydre_Prado_1634.jpg" alt="Zurbarán, Hercule combat l'Hydre">
+      <p class="artwork-ref">Francisco de Zurbarán, <em>Hercule combat l'Hydre</em>, 1634, Prado</p>
+      <p class="artwork-note">Série des Travaux d'Hercule pour le Salon des Royaumes : Hercule comme figure du pouvoir royal espagnol</p>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== TRANSITION: L'HYDRE POLITIQUE ==================== -->
+<div class="slide" data-section="III. Réception post-antique"
+     data-bg="images/L'Hydre_aristocratique,_1789.jpeg"
+     data-bg-opacity="0.1"
+     data-notes="Transition vers la partie politique. C'est le cœur de la réception.">
+  <div class="slide-content">
+    <div class="section-title">
+      <h2>L'Hydre politique</h2>
+      <h4>De Louis XIV à la Commune</h4>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== PUGET INTRO (1659-60) ==================== -->
+<div class="slide" data-section="III. Réception post-antique"
+     data-notes="Insister sur Hercule = Louis XIV. La sculpture elle-même a une histoire de réception (brisée/retrouvée).">
+  <div class="slide-content">
+    <div class="layout-split">
+      <div class="split-text">
+        <h3><em>Hercule terrassant l'Hydre de Lerne</em></h3>
+        <p class="muted">Pierre Puget</p>
+        <p class="muted">1659-1660, château du Vaudreuil</p>
+        <p class="muted mb-1">Musée des Beaux-Arts de Rouen</p>
+        <p class="mt-2"><span class="highlight">Hercule = Le Roi.</span> Symbole ultime de la vertu royale sous Louis XIV.</p>
+        <p>Influence de Michel-Ange, violence baroque avec discipline classique.</p>
+        <p>Brisée pendant la Révolution, retrouvée enterrée en 1883.</p>
+      </div>
+      <div class="split-image">
+        <div>
+          <img src="images/Musée_des_Beaux-Arts_de_Rouen_-_Hercule_terrassant_l'hydre_de_Lerne.jpg" alt="Puget, Hercule terrassant l'Hydre">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== PUGET ZOOM (2 angles) ==================== -->
+<div class="slide zoom-slide" data-section="III. Réception post-antique"
+     data-notes="Laisser observer la musculature, la violence du geste. 2 angles de la même sculpture.">
+  <div class="slide-content">
+    <div style="display: flex; align-items: center; justify-content: center; gap: 40px; height: 100%; padding: 40px;">
+      <img src="images/Hercule_terrassant_l&#39;hydre_de_Lerne_by_Pierre_Puget_03.jpg" alt="Puget, vue de face" style="max-height: 80vh; max-width: 45%; object-fit: contain;">
+      <img src="images/Mus%C3%A9e_des_Beaux-Arts_de_Rouen_-_Hercule_terrassant_l%27hydre_de_Lerne.jpg" alt="Puget, vue au musée" style="max-height: 80vh; max-width: 45%; object-fit: contain;">
+    </div>
+  </div>
+</div>
+
+<!-- ==================== MILTON (1667) ==================== -->
+<div class="slide" data-section="III. Réception post-antique"
+     data-bg="images/gorgons-hydras-1600 paradise lost.jpg"
+     data-bg-opacity="0.2"
+     data-notes="Milton ancre l'Hydre dans l'imaginaire chrétien de l'enfer.">
+  <div class="slide-content">
+    <div class="layout-split">
+      <div class="split-text" style="text-align: center;">
+        <p class="citation xlarge">« Gorgons, and Hydras, and Chimeras dire »</p>
+        <p class="citation-translation" style="font-size: 1em;">« Gorgones, Hydres, et effroyables Chimères »</p>
+        <p class="citation-source mt-1">John Milton, <em>Paradise Lost</em>, 1667</p>
+        <p class="mt-3">L'Hydre = figure de l'enfer, du monstrueux absolu</p>
+      </div>
+      <div class="split-image">
+        <div>
+          <img src="images/gorgons-hydras-1600 paradise lost.jpg" alt="Paradise Lost, gravure">
+          <p class="image-caption">Gravure pour Paradise Lost</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 30: L'HYDRE ARISTOCRATIQUE INTRO ==================== -->
+<div class="slide" data-section="III. Réception post-antique"
+     data-notes="Moment clé de l'exposé : le RENVERSEMENT. Sous Louis XIV, Hercule = le Roi. En 1789, Hercule = le Peuple.">
+  <div class="slide-content">
+    <div class="layout-split">
+      <div class="split-text">
+        <h2 style="font-size: 2em; color: #c9a96e;">LA MÉTAPHORE S'INVERSE</h2>
+        <p class="muted">L'Hydre aristocratique, 1789</p>
+        <p class="muted mb-1">Estampe révolutionnaire (Gallica, BnF)</p>
+        <p class="mt-2"><span class="highlight">Le peuple = nouvel Hercule</span></p>
+        <p><span class="highlight">L'Hydre = l'aristocratie</span></p>
+      </div>
+      <div class="split-image">
+        <div>
+          <img src="images/L'Hydre_aristocratique,_1789.jpeg" alt="L'Hydre aristocratique, 1789">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 31: L'HYDRE ARISTOCRATIQUE ZOOM ==================== -->
+<div class="slide zoom-slide" data-section="III. Réception post-antique"
+     data-bg="images/L'Hydre_aristocratique,_1789.jpeg"
+     data-bg-opacity="1"
+     data-bg-size="contain"
+     data-notes="Lire la citation. Noter les TÊTES HUMAINES - même procédé qu'Alciato 1615. Continuité iconographique.">
+  <div class="slide-content">
+    <div style="position: absolute; bottom: 60px; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.8); padding: 20px 40px; border-radius: 4px; max-width: 80%; text-align: center;">
+      <p class="citation" style="font-size: 1em;">« Féroce, barbare, sanguinaire, ne se repaissant que de sang, de larmes et de la subsistance des malheureux »</p>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 32: BECQUET INTRO ==================== -->
+<div class="slide" data-section="III. Réception post-antique"
+     data-notes="Montrer que la MÊME image (Hydre à têtes humaines) change de camp politique.">
+  <div class="slide-content">
+    <div class="layout-split">
+      <div class="split-text">
+        <h3>Le retournement</h3>
+        <p class="muted">Becquet (imprimerie)</p>
+        <p class="muted"><em>L'Hydre de l'Anarchie</em>, ~1830</p>
+        <p class="muted mb-1">Musée Carnavalet, inv. G.45138</p>
+        <p class="mt-2">Les conservateurs retournent la métaphore</p>
+        <div class="highlight-box"><p><span class="highlight">Le même monstre sert les deux camps</span></p></div>
+        <p class="mt-1 small">XVIIe s. colonial : les « têtes toujours changeantes du monstre » (Linebaugh &amp; Rediker, <em>The Many-Headed Hydra</em>, 2000)</p>
+      </div>
+      <div class="split-image">
+        <div>
+          <img src="images/image_becquet_imprimerie_hydre_de_lanar_g.45138_696247.jpg" alt="Becquet, L'Hydre de l'Anarchie">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 33: BECQUET ZOOM ==================== -->
+<div class="slide zoom-slide" data-section="III. Réception post-antique"
+     data-bg="images/image_becquet_imprimerie_hydre_de_lanar_g.45138_696247.jpg"
+     data-bg-opacity="1"
+     data-bg-size="contain"
+     data-notes="Rapide.">
+  <div class="slide-content"></div>
+</div>
+
+<!-- ==================== SLIDE 34: MOREAU INTRO ==================== -->
+<div class="slide" data-section="III. Réception post-antique"
+     data-notes="Moreau est le sommet artistique. Prendre le temps.">
+  <div class="slide-content">
+    <div class="layout-split">
+      <div class="split-text">
+        <h3>Gustave Moreau</h3>
+        <p class="muted"><em>Hercule et l'Hydre de Lerne</em></p>
+        <p class="muted">1875-1876, Art Institute of Chicago</p>
+        <div class="mt-2">
+          <p>Hercule calme, juvénile, presque figé</p>
+          <p>Paysage = « limon primordial », cadavres au sol</p>
+          <p>Lecture politique : allégorie de la défaite de 1870 face à la Prusse ?</p>
+          <p class="highlight">La tête immortelle = menace permanente pesant sur la nation</p>
+        </div>
+      </div>
+      <div class="split-image">
+        <div>
+          <img src="images/Hercules_and_the_Lernaean_Hydra,_1875-1876,_by_Gustave_Moreau_-_Art_Institute_of_Chicago_-_DSC09590.jpg" alt="Gustave Moreau, Hercule et l'Hydre de Lerne">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 35: MOREAU ZOOM ==================== -->
+<div class="slide zoom-slide" data-section="III. Réception post-antique"
+     data-bg="images/Hercules_and_the_Lernaean_Hydra,_1875-1876,_by_Gustave_Moreau_-_Art_Institute_of_Chicago_-_DSC09590.jpg"
+     data-bg-opacity="1"
+     data-bg-size="contain"
+     data-notes="Commenter : les têtes de cobra, les cadavres, l'atmosphère crépusculaire.">
+  <div class="slide-content"></div>
+</div>
+
+<!-- ==================== SLIDE 36: SCIENCE TITLE ==================== -->
+<div class="slide" data-section="III. Réception post-antique"
+     data-bg="images/10_Polype_Hydra_magnipapillata.jpg"
+     data-bg-opacity="0.08"
+     data-notes="Transition vers la science.">
+  <div class="slide-content">
+    <div class="section-title">
+      <h2>Du mythe à la biologie de l'immortalité</h2>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 37: HYDRE DE HAMBOURG INTRO ==================== -->
+<div class="slide" data-section="III. Réception post-antique"
+     data-notes="Histoire fascinante - la frontière entre mythe et science.">
+  <div class="slide-content">
+    <div class="layout-split">
+      <div class="split-text">
+        <h3>La fausse Hydre de Hambourg</h3>
+        <p class="muted mb-1">Gravure d'Albertus Seba, XVIIIe s.</p>
+        <p class="mt-2">Spécimen taxidermisé à 7 têtes</p>
+        <p>Mâchoires de belettes + peaux de serpents</p>
+        <p>Probablement fabriquée par des moines pour incarner la Bête de l'Apocalypse</p>
+        <p>Débunkée par Linné en 1735</p>
+      </div>
+      <div class="split-image">
+        <div>
+          <img src="images/07_Hydre_Hambourg_Seba_debunkee_Linnee.jpg" alt="Fausse Hydre de Hambourg">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 38: HYDRE DE HAMBOURG ZOOM ==================== -->
+<div class="slide zoom-slide" data-section="III. Réception post-antique"
+     data-bg="images/07_Hydre_Hambourg_Seba_debunkee_Linnee.jpg"
+     data-bg-opacity="1"
+     data-bg-size="contain"
+     data-notes="Rapide.">
+  <div class="slide-content"></div>
+</div>
+
+<!-- ==================== SLIDE 39: TREMBLEY INTRO ==================== -->
+<div class="slide" data-section="III. Réception post-antique"
+     data-notes="Le moment où la science reproduit le mythe. Très marquant.">
+  <div class="slide-content">
+    <div class="layout-split">
+      <div class="split-text">
+        <h3>Abraham Trembley (1744)</h3>
+        <p class="muted mb-1">Tuteur genevois aux Pays-Bas</p>
+        <p class="mt-2">Il coupe un polype en deux et observe la régénération complète</p>
+        <p>Il crée des hydres à 7-9 têtes par incision partielle</p>
+        <p class="highlight">= recréant la créature de Lerne en laboratoire</p>
+        <p>Remet en cause l'idée d'une âme indivisible</p>
+      </div>
+      <div class="split-image">
+        <div>
+          <img src="images/11_Trembley_planche_polypes_1744.jpg" alt="Trembley, planches polypes">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 40: TREMBLEY ZOOM ==================== -->
+<div class="slide zoom-slide" data-section="III. Réception post-antique"
+     data-bg="images/11_Trembley_planche_polypes_1744.jpg"
+     data-bg-opacity="1"
+     data-bg-size="contain"
+     data-notes="Rapide.">
+  <div class="slide-content"></div>
+</div>
+
+<!-- ==================== SLIDE 41: NON-SÉNESCENCE ==================== -->
+<div class="slide" data-section="III. Réception post-antique"
+     data-notes="Le polype hydra possède RÉELLEMENT les propriétés du monstre mythique.">
+  <div class="slide-content">
+    <div class="layout-img-table">
+      <div class="img-col">
+        <img src="images/10_Polype_Hydra_magnipapillata.jpg" alt="Hydra magnipapillata">
+        <p class="artwork-ref"><em>Hydra magnipapillata</em></p>
+      </div>
+      <div class="table-col">
+        <h3 style="font-size: 1.2em;">La réalité biologique du mythe</h3>
+        <table>
+          <thead>
+            <tr><th>Biologie</th><th>Mythe</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>50 000 à 100 000 cellules</td><td>Les multiples têtes</td></tr>
+            <tr><td>Régénération d'un corps entier</td><td>La tête qui repousse</td></tr>
+            <tr><td>Absence de vieillissement (non-sénescence)</td><td>La tête immortelle enterrée par Héraklès</td></tr>
+            <tr><td>Nématocystes (cellules urticantes)</td><td>Le venin mortel</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 42: CONSTELLATION - HEVELIUS ==================== -->
+<div class="slide zoom-slide" data-section="III. Réception post-antique"
+     data-notes="La constellation Hydra est la plus grande des 88 constellations modernes. Hevelius en donne la représentation la plus célèbre.">
+  <div class="slide-content">
+    <div class="layout-artwork">
+      <img src="images/Hevelius Uranographia Hydra constellation 1690.png" alt="Hevelius, constellation Hydra, Uranographia 1690">
+      <p class="artwork-ref">Johannes Hevelius, <em>Uranographia</em>, 1690 - La constellation Hydra</p>
+      <p class="artwork-note"><em>Hydra</em> : la plus grande des 88 constellations modernes, réinterprétation du Mush-dragon babylonien. Le Cancer (crabe) : constellation voisine, placée par Héra.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== TRANSITION: RÉCEPTION CONTEMPORAINE ==================== -->
+<div class="slide" data-section="III. Réception post-antique"
+     data-notes="Transition vers la pop culture et la comparaison interculturelle.">
+  <div class="slide-content">
+    <div class="section-title">
+      <h2>La réception contemporaine</h2>
+      <h4>Du cinéma à la mythologie comparée</h4>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 43: PERCY JACKSON ==================== -->
+<div class="slide zoom-slide" data-section="III. Réception post-antique"
+     data-notes="Lancer la vidéo. L'Hydre cracheuse de feu = fusion avec le dragon médiéval.">
+  <div class="slide-content">
+    <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; padding: 40px; gap: 20px;">
+      <h3>La réception contemporaine : <em>Percy Jackson</em> (2010)</h3>
+      <video controls style="max-height: 65vh; max-width: 90%; border-radius: 4px; box-shadow: 0 8px 30px rgba(0,0,0,0.6);">
+        <source src="images/percy_jackson_hydra.mp4" type="video/mp4">
+      </video>
+      <p class="artwork-note">L'Hydre cracheuse de feu : fusion du mythe antique avec le dragon médiéval</p>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 44: XIANGLIU ==================== -->
+<div class="slide" data-section="III. Réception post-antique"
+     data-notes="Rapide - montrer l'universalité du motif.">
+  <div class="slide-content">
+    <div class="layout-split">
+      <div class="split-text">
+        <h3>Comparaison interculturelle : le Xiangliu chinois</h3>
+        <p class="muted">(Huang Chi, 2021)</p>
+        <table class="mt-1" style="font-size: 0.8em;">
+          <thead>
+            <tr><th></th><th>Hydre</th><th>Xiangliu</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="gold">Apparence</td><td>9 têtes de dragon</td><td>9 visages humains</td></tr>
+            <tr><td class="gold">Régénération</td><td>Oui</td><td>Non</td></tr>
+            <tr><td class="gold">Lien à l'eau</td><td>Marais de Lerne</td><td>Dieu de l'eau (Gonggong)</td></tr>
+            <tr><td class="gold">Héros</td><td>Héraklès</td><td>Dayu</td></tr>
+            <tr><td class="gold">Venin</td><td>Oui</td><td>Oui (sang empoisonne la terre)</td></tr>
+          </tbody>
+        </table>
+        <p class="mt-1">Mêmes thèmes (contrôle des inondations, culte du héros) mais le dragon est <span class="highlight">sacré</span> en Chine</p>
+      </div>
+      <div class="split-image">
+        <div>
+          <img src="images/xiangliu chinois.jpg" alt="Xiangliu, serpent à 9 têtes chinois">
+          <p class="image-caption">Le Xiangliu, <em>Shanhaijing</em></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 45: CONCLUSION TITLE ==================== -->
+<div class="slide" data-section="Conclusion"
+     data-bg="images/Hercules_and_the_Lernaean_Hydra,_1875-1876,_by_Gustave_Moreau_-_Art_Institute_of_Chicago_-_DSC09590.jpg"
+     data-bg-opacity="0.06"
+     data-notes="2 minutes pour conclure.">
+  <div class="slide-content">
+    <div class="section-title">
+      <h2>Conclusion</h2>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 46: LA MÉTAPHORE RETOURNÉE ==================== -->
+<div class="slide" data-section="Conclusion"
+     data-bg="images/Hercules_and_the_Lernaean_Hydra,_1875-1876,_by_Gustave_Moreau_-_Art_Institute_of_Chicago_-_DSC09590.jpg"
+     data-bg-opacity="0.06"
+     data-notes="Le retournement est la clé de la conclusion.">
+  <div class="slide-content">
+    <div class="layout-text centered">
+      <h3>La métaphore retournée</h3>
+      <div class="mt-2">
+        <div class="schema-block">
+          <p class="schema-label">Hercule peut être :</p>
+          <p>Le Roi <span class="muted small">(Puget, 1660)</span></p>
+          <p>Le Peuple <span class="muted small">(Révolution, 1789)</span></p>
+          <p>La République <span class="muted small">(XIXe s.)</span></p>
+        </div>
+        <div class="schema-separator"></div>
+        <div class="schema-block">
+          <p class="schema-label">L'Hydre peut être :</p>
+          <p>L'aristocratie</p>
+          <p>L'anarchie</p>
+          <p>La Prusse</p>
+        </div>
+      </div>
+      <div class="highlight-box mt-2" style="display: inline-block;">Le même monstre sert tous les camps</div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 47: LE PARADOXE ==================== -->
+<div class="slide" data-section="Conclusion"
+     data-bg="images/Hercules_and_the_Lernaean_Hydra,_1875-1876,_by_Gustave_Moreau_-_Art_Institute_of_Chicago_-_DSC09590.jpg"
+     data-bg-opacity="0.06"
+     data-notes="Le paradoxe final.">
+  <div class="slide-content">
+    <div class="layout-text centered">
+      <p class="citation large" style="max-width: 75%; margin: 0 auto;">« La postérité immense du mythe repose sur une seule propriété - la régénération des têtes - qui est un détail narratif comparativement tardif. »</p>
+      <p class="mt-3">Euripide, Ve siècle av. J.-C.</p>
+      <p class="highlight mt-1" style="font-size: 1.2em;">Hésiode ne mentionne même pas le nombre de têtes.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 48: FIL ROUGE DU VENIN ==================== -->
+<div class="slide" data-section="Conclusion"
+     data-bg="images/Amphore grecque représentant hercules combattant l'hydre de lerne.jpg"
+     data-bg-opacity="0.06"
+     data-notes="Rappeler le fil rouge. Boucler.">
+  <div class="slide-content">
+    <div class="layout-text centered">
+      <h3>Le venin : fil rouge mythologique</h3>
+      <div class="venin-chain mt-3">
+        <span class="chain-item">Hydre</span>
+        <span class="chain-arrow">→</span>
+        <span class="chain-item">Flèches</span>
+        <span class="chain-arrow">→</span>
+        <span class="chain-item">Nessos</span>
+        <span class="chain-arrow">→</span>
+        <span class="chain-item">Tunique</span>
+        <span class="chain-arrow">→</span>
+        <span class="chain-item">Mort d'Héraclès</span>
+        <span class="chain-arrow">→</span>
+        <span class="chain-item">Philoctète</span>
+        <span class="chain-arrow">→</span>
+        <span class="chain-item">Fin de Troie</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 49: CITATION FINALE ==================== -->
+<div class="slide" data-section="Conclusion"
+     data-bg="images/Hercules_and_the_Lernaean_Hydra,_1875-1876,_by_Gustave_Moreau_-_Art_Institute_of_Chicago_-_DSC09590.jpg"
+     data-bg-opacity="0.1"
+     data-notes="Laisser un silence après la citation. Puis remercier.">
+  <div class="slide-content">
+    <div class="layout-text centered">
+      <p class="citation xlarge" style="max-width: 75%; margin: 0 auto;">« Le Serpent, assimilé au Mal absolu, perdra tous ses amis, même Héraclès. »</p>
+      <p class="citation-source mt-2">Gilis &amp; Verbanck-Piérard</p>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 50: MERCI ==================== -->
+<div class="slide" data-section="Conclusion"
+     data-bg="images/Hercules_and_the_Lernaean_Hydra,_1875-1876,_by_Gustave_Moreau_-_Art_Institute_of_Chicago_-_DSC09590.jpg"
+     data-bg-opacity="0.06"
+     data-notes="Ouvrir la discussion.">
+  <div class="slide-content">
+    <div class="layout-text centered">
+      <h2>Merci de votre attention</h2>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 51: BIBLIOGRAPHIE ==================== -->
+<div class="slide" data-section="Bibliographie"
+     data-notes="Slide de référence. Ne pas lire tout, juste la montrer.">
+  <div class="slide-content">
+    <div class="layout-text" style="max-width: 1400px; font-size: 0.7em; line-height: 1.6;">
+      <h3 style="margin-bottom: 0.8em;">Bibliographie</h3>
+
+      <p class="gold" style="font-size: 0.85em; margin-bottom: 0.3em;">Sources principales</p>
+      <p>Gibbons, S.E. (1975), <em>The Labours of Heracles: A Literary and Artistic Examination</em>, thèse PhD, London University, chap. III, p. 75-101.</p>
+      <p>Gilis, É. &amp; Verbanck-Piérard, A., « Héraclès, pourfendeur de dragons », in C. Bonnet, C. Jourdain-Annequin &amp; V. Pirenne-Delforge (dir.), <em>Le Bestiaire d'Héraclès, IIIe Rencontre héracléenne</em>, p. 37-60.</p>
+      <p>Ruck, C.A.P., « The Myth of the Lernaean Hydra », Department of Classical Studies, Boston University.</p>
+      <p>Thivaiou, D. et al., « Lake Lerna: investigating Hercules' ancient myth », poster, National and Kapodistrian University of Athens / HCMR.</p>
+      <p>Huang Chi (2021), « A Comparative Study of Chinese Xiangliu and Greek Hydra », <em>Sociology and Anthropology</em>, 9(4), p. 37-41.</p>
+
+      <p class="gold" style="font-size: 0.85em; margin-top: 0.8em; margin-bottom: 0.3em;">Sources secondaires</p>
+      <p>Hunt, L. (2004), <em>Politics, Culture, and Class in the French Revolution</em>, University of California Press, p. 95-98.</p>
+      <p>Linebaugh, P. &amp; Rediker, M. (2000), <em>The Many-Headed Hydra: Sailors, Slaves, Commoners, and the Hidden History of the Revolutionary Atlantic</em>, Verso.</p>
+      <p>Alciato, A., <em>Emblematum Liber</em> (1531), éd. Lyon 1550 (Eskrich), trad. fr. Aneau 1558, éd. Nájera 1615.</p>
+      <p>Milton, J. (1667), <em>Paradise Lost</em>.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== SLIDE 52: SOURCES ICONOGRAPHIQUES ==================== -->
+<div class="slide" data-section="Bibliographie"
+     data-notes="Slide de référence iconographique.">
+  <div class="slide-content">
+    <div class="layout-text" style="max-width: 1500px; font-size: 0.6em; line-height: 1.5;">
+      <h3 style="margin-bottom: 0.8em;">Sources iconographiques</h3>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0 40px;">
+        <div>
+          <p class="gold" style="font-size: 0.9em;">Antiquité</p>
+          <p>Amphore attique, Louvre E 851, VIe s. av. J.-C.</p>
+          <p>Vases grecs, Louvre CA 598, CA 7318, VIe-Ve s. av. J.-C.</p>
+          <p>Vase grec, Nationalmuseet Copenhague B96</p>
+          <p>Amphore attique de Tarquinia, 560-540 av. J.-C.</p>
+          <p>Hydrie cérétaine, Getty Museum 83.AE.346, 520-510 av. J.-C.</p>
+          <p>Sceau cylindre akkadien, Tell Asmar, ~2500 av. J.-C.</p>
+          <p>Plaquette en terre cuite, Mésopotamie, ~2500-2000 av. J.-C.</p>
+          <p>Mosaïque romaine, IIIe s., Liria (Espagne), MAN Madrid</p>
+          <p>Mosaïque gallo-romaine, 170-180 ap. J.-C., Saint-Paul-lès-Romans (Drôme)</p>
+
+          <p class="gold" style="font-size: 0.9em; margin-top: 0.5em;">Moyen Âge</p>
+          <p>Manuscrit enluminé, BnF Français 22552 f.160, XVe s.</p>
+          <p>Bestiaire du Northumberland, ~1250-1260</p>
+
+          <p class="gold" style="font-size: 0.9em; margin-top: 0.5em;">Renaissance</p>
+          <p>Pollaiuolo, <em>Ercole e l'Idra</em>, ~1475, Offices, Florence</p>
+          <p>Alciato, <em>Emblematum Liber</em>, embl. 136, éd. Lyon 1550 / Nájera 1615</p>
+          <p>Beham, <em>Hercules una cum Iolao Hydram occidit</em>, 1545</p>
+        </div>
+        <div>
+          <p class="gold" style="font-size: 0.9em;">Baroque</p>
+          <p>Zurbarán, <em>Hercule combat l'Hydre</em>, 1634, Prado, Madrid</p>
+          <p>Puget, <em>Hercule terrassant l'Hydre</em>, 1659-60, MBA Rouen (inv. 884.12.1)</p>
+
+          <p class="gold" style="font-size: 0.9em; margin-top: 0.5em;">XIXe siècle</p>
+          <p>Moreau, <em>Hercule et l'Hydre de Lerne</em>, 1875-76, Art Institute of Chicago</p>
+
+          <p class="gold" style="font-size: 0.9em; margin-top: 0.5em;">Politique</p>
+          <p><em>L'Hydre aristocratique</em>, estampe, 1789, Gallica / BnF</p>
+          <p>Becquet, <em>L'Hydre de l'Anarchie</em>, ~1830, Musée Carnavalet G.45138</p>
+
+          <p class="gold" style="font-size: 0.9em; margin-top: 0.5em;">Science</p>
+          <p>Seba, fausse Hydre de Hambourg, XVIIIe s.</p>
+          <p>Trembley, <em>Mémoires pour l'histoire des polypes</em>, 1744</p>
+          <p><em>Hydra magnipapillata</em>, photo microscopique</p>
+          <p>Hevelius, <em>Uranographia</em>, constellation Hydra, 1690</p>
+
+          <p class="gold" style="font-size: 0.9em; margin-top: 0.5em;">Autres</p>
+          <p>Gravure pour <em>Paradise Lost</em>, Milton, 1667</p>
+          <p>Xiangliu, illustration du <em>Shanhaijing</em></p>
+          <p><em>Percy Jackson : Le Voleur de Foudre</em>, Chris Columbus, 2010</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /#presentation -->
+
+<!-- SLIDE COUNTER -->
+<div id="slide-counter"></div>
+<div id="section-indicator"></div>
+
+<!-- NOTES PANEL -->
+<div id="notes-panel"></div>
+
+<script>
+(function() {
+  // Background image injection
+  document.querySelectorAll('.slide[data-bg]').forEach(function(slide) {
+    var bg = document.createElement('div');
+    bg.className = 'slide-bg';
+    bg.style.backgroundImage = 'url("' + slide.dataset.bg + '")';
+    bg.style.opacity = slide.dataset.bgOpacity || '0.3';
+    bg.style.backgroundSize = slide.dataset.bgSize || 'cover';
+    slide.prepend(bg);
+  });
+
+  // Navigation state
+  var current = 0;
+  var overviewMode = false;
+  var notesVisible = false;
+  var slides = document.querySelectorAll('.slide');
+  var counter = document.getElementById('slide-counter');
+  var notesPanel = document.getElementById('notes-panel');
+  var sectionIndicator = document.getElementById('section-indicator');
+
+  function goTo(n) {
+    if (n < 0 || n >= slides.length) return;
+    slides[current].classList.remove('active');
+    current = n;
+    slides[current].classList.add('active');
+    updateUI();
+  }
+
+  function updateUI() {
+    counter.textContent = (current + 1) + ' / ' + slides.length;
+    sectionIndicator.textContent = slides[current].dataset.section || '';
+    if (notesVisible) {
+      notesPanel.textContent = slides[current].dataset.notes || '';
+    }
+    window.location.hash = current;
+  }
+
+  function next() { goTo(current + 1); }
+  function prev() { goTo(current - 1); }
+
+  function toggleOverview() {
+    var pres = document.getElementById('presentation');
+    overviewMode = !overviewMode;
+    if (overviewMode) {
+      pres.classList.add('overview');
+    } else {
+      pres.classList.remove('overview');
+    }
+  }
+
+  function toggleNotes() {
+    notesVisible = !notesVisible;
+    if (notesVisible) {
+      notesPanel.classList.add('visible');
+      notesPanel.textContent = slides[current].dataset.notes || '';
+    } else {
+      notesPanel.classList.remove('visible');
+      notesPanel.textContent = '';
+    }
+  }
+
+  // Keyboard navigation
+  document.addEventListener('keydown', function(e) {
+    if (overviewMode) {
+      if (e.key === 'Escape') toggleOverview();
+      return;
+    }
+    if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); next(); }
+    if (e.key === 'ArrowLeft') { e.preventDefault(); prev(); }
+    if (e.key === 'Escape') toggleOverview();
+    if (e.key === 's' || e.key === 'S') toggleNotes();
+  });
+
+  // Click handler for overview mode
+  slides.forEach(function(slide, i) {
+    slide.addEventListener('click', function() {
+      if (overviewMode) {
+        toggleOverview();
+        goTo(i);
+      }
+    });
+  });
+
+  // Touch support for mobile
+  var touchStartX = 0;
+  var touchEndX = 0;
+  document.addEventListener('touchstart', function(e) {
+    touchStartX = e.changedTouches[0].screenX;
+  }, false);
+  document.addEventListener('touchend', function(e) {
+    touchEndX = e.changedTouches[0].screenX;
+    var diff = touchStartX - touchEndX;
+    if (Math.abs(diff) > 50) {
+      if (diff > 0) next();
+      else prev();
+    }
+  }, false);
+
+  // Hash navigation on load
+  if (window.location.hash) {
+    current = parseInt(window.location.hash.slice(1)) || 0;
+    if (current >= slides.length) current = 0;
+  }
+  slides[current].classList.add('active');
+  counter.textContent = (current + 1) + ' / ' + slides.length;
+})();
+</script>
+
+</body>
+</html>
