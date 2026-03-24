@@ -8,6 +8,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=IM+Fell+Great+Primer+SC&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.2/jspdf.umd.min.js"></script>
 
 <style>
 /* ===== RESET ===== */
@@ -2208,8 +2210,59 @@ tr:last-child td {
   };
   updateExportBtn();
 
-  exportBtn.addEventListener('click', function() {
-    window.print();
+  exportBtn.addEventListener('click', async function() {
+    var btn = this;
+    var origText = btn.innerHTML;
+    btn.disabled = true;
+    btn.innerHTML = '&#9203; 0/' + slides.length;
+
+    var savedCurrent = current;
+    var jsPDF = window.jspdf.jsPDF;
+    var pdf = new jsPDF({ orientation: 'landscape', unit: 'px', format: [window.innerWidth, window.innerHeight] });
+
+    // Hide UI elements during capture
+    exportBtn.style.display = 'none';
+    counter.style.display = 'none';
+    sectionIndicator.style.display = 'none';
+    notesPanel.style.display = 'none';
+
+    for (var i = 0; i < slides.length; i++) {
+      // Show this slide
+      slides.forEach(function(s) { s.classList.remove('active'); });
+      slides[i].classList.add('active');
+
+      // Wait for background images and rendering
+      await new Promise(function(r) { setTimeout(r, 150); });
+
+      var canvas = await html2canvas(slides[i], {
+        backgroundColor: '#0a0a0a',
+        scale: 2,
+        useCORS: true,
+        width: window.innerWidth,
+        height: window.innerHeight
+      });
+
+      var imgData = canvas.toDataURL('image/jpeg', 0.92);
+      if (i > 0) pdf.addPage();
+      pdf.addImage(imgData, 'JPEG', 0, 0, window.innerWidth, window.innerHeight);
+
+      btn.innerHTML = '&#9203; ' + (i + 1) + '/' + slides.length;
+    }
+
+    // Restore original slide
+    slides.forEach(function(s) { s.classList.remove('active'); });
+    slides[savedCurrent].classList.add('active');
+
+    // Restore UI
+    exportBtn.style.display = '';
+    counter.style.display = '';
+    sectionIndicator.style.display = '';
+    notesPanel.style.display = '';
+
+    pdf.save('Hydre_de_Lerne_-_Expose.pdf');
+
+    btn.disabled = false;
+    btn.innerHTML = origText;
   });
 
 })();
