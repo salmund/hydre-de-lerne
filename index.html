@@ -202,84 +202,81 @@ body.show-export-btn #export-pdf-btn {
 }
 
 /* ===== CINEMATIC TRANSITIONS ===== */
+/* All transitions use cubic-bezier for smooth acceleration/deceleration */
+/* Exit and enter overlap: enter starts at ~40% of exit for fluid crossfade */
 
-/* Disable default CSS transition — JS handles it */
 .slide.transitioning {
   transition: none !important;
 }
 
-/* --- Fade to black (epic pause) --- */
+/* --- Fade to black --- */
 .slide.exit-fade-black {
-  animation: exitFadeBlack 1s ease-in forwards;
+  animation: exitFadeBlack 0.6s cubic-bezier(0.4, 0, 0.7, 1) forwards;
 }
 .slide.enter-fade-black {
-  animation: enterFadeBlack 1s ease-out 0.6s forwards;
+  animation: enterFadeBlack 0.55s cubic-bezier(0.3, 0, 0.2, 1) 0.25s forwards;
   opacity: 0 !important;
 }
 @keyframes exitFadeBlack {
-  0%   { opacity: 1; filter: brightness(1) sepia(0); }
-  50%  { opacity: 1; filter: brightness(1.3) sepia(0.4); }
-  100% { opacity: 0; filter: brightness(0) sepia(0); }
+  0%   { opacity: 1; filter: brightness(1); }
+  100% { opacity: 0; filter: brightness(0.3); }
 }
 @keyframes enterFadeBlack {
-  0%   { opacity: 0; filter: brightness(0) sepia(0.5); }
-  40%  { opacity: 0.6; filter: brightness(0.8) sepia(0.3); }
-  100% { opacity: 1; filter: brightness(1) sepia(0); }
+  0%   { opacity: 0; filter: brightness(0.3); }
+  100% { opacity: 1; filter: brightness(1); }
 }
 
-/* --- Sepia dissolve (parchment feel) --- */
+/* --- Sepia dissolve --- */
 .slide.exit-sepia {
-  animation: exitSepia 0.9s ease-in forwards;
+  animation: exitSepia 0.55s cubic-bezier(0.4, 0, 0.7, 1) forwards;
 }
 .slide.enter-sepia {
-  animation: enterSepia 0.9s ease-out 0.5s forwards;
+  animation: enterSepia 0.5s cubic-bezier(0.3, 0, 0.2, 1) 0.2s forwards;
   opacity: 0 !important;
 }
 @keyframes exitSepia {
   0%   { opacity: 1; filter: sepia(0) blur(0); }
-  60%  { opacity: 0.8; filter: sepia(0.6) blur(1px); }
-  100% { opacity: 0; filter: sepia(1) blur(4px); }
+  100% { opacity: 0; filter: sepia(0.5) blur(2px); }
 }
 @keyframes enterSepia {
-  0%   { opacity: 0; filter: sepia(1) blur(4px); }
-  40%  { opacity: 0.7; filter: sepia(0.4) blur(1px); }
+  0%   { opacity: 0; filter: sepia(0.5) blur(2px); }
   100% { opacity: 1; filter: sepia(0) blur(0); }
 }
 
-/* --- Zoom into darkness (dramatic plunge) --- */
+/* --- Zoom into darkness --- */
 .slide.exit-zoom-dark {
-  animation: exitZoomDark 1.1s ease-in forwards;
+  animation: exitZoomDark 0.6s cubic-bezier(0.4, 0, 0.7, 1) forwards;
 }
 .slide.enter-zoom-dark {
-  animation: enterZoomDark 1.1s ease-out 0.5s forwards;
+  animation: enterZoomDark 0.55s cubic-bezier(0.3, 0, 0.2, 1) 0.25s forwards;
   opacity: 0 !important;
 }
 @keyframes exitZoomDark {
   0%   { opacity: 1; transform: scale(1); filter: brightness(1); }
-  100% { opacity: 0; transform: scale(1.5); filter: brightness(0); }
+  100% { opacity: 0; transform: scale(1.15); filter: brightness(0.2); }
 }
 @keyframes enterZoomDark {
-  0%   { opacity: 0; transform: scale(0.8); filter: brightness(0); }
+  0%   { opacity: 0; transform: scale(0.92); filter: brightness(0.2); }
   100% { opacity: 1; transform: scale(1); filter: brightness(1); }
 }
 
-/* --- Golden veil (mythological reveal) --- */
+/* --- Golden veil --- */
 .slide.exit-golden-veil {
-  animation: exitGoldenVeil 1s ease-in forwards;
+  animation: exitGoldenVeil 0.6s cubic-bezier(0.4, 0, 0.7, 1) forwards;
 }
 .slide.enter-golden-veil {
-  animation: enterGoldenVeil 1s ease-out 0.5s forwards;
+  animation: enterGoldenVeil 0.55s cubic-bezier(0.3, 0, 0.2, 1) 0.25s forwards;
   opacity: 0 !important;
 }
 @keyframes exitGoldenVeil {
   0%   { opacity: 1; filter: brightness(1) sepia(0); }
-  50%  { opacity: 1; filter: brightness(1.6) sepia(0.7) saturate(1.5); }
-  100% { opacity: 0; filter: brightness(2) sepia(1) saturate(2); }
+  40%  { opacity: 1; filter: brightness(1.3) sepia(0.4); }
+  100% { opacity: 0; filter: brightness(1.5) sepia(0.6); }
 }
 @keyframes enterGoldenVeil {
-  0%   { opacity: 0; filter: brightness(2) sepia(1) saturate(2); }
-  50%  { opacity: 0.8; filter: brightness(1.3) sepia(0.3) saturate(1.2); }
-  100% { opacity: 1; filter: brightness(1) sepia(0) saturate(1); }
+  0%   { opacity: 0; filter: brightness(1.5) sepia(0.6); }
+  60%  { opacity: 0.85; filter: brightness(1.1) sepia(0.15); }
+  100% { opacity: 1; filter: brightness(1) sepia(0); }
 }
 
 /* ===== SLIDE SYSTEM ===== */
@@ -2126,6 +2123,10 @@ tr:last-child td {
     transitionTypes.forEach(function(t) {
       el.classList.remove('exit-' + t, 'enter-' + t, 'transitioning');
     });
+    el.style.visibility = '';
+    el.style.filter = '';
+    el.style.opacity = '';
+    el.style.transform = '';
   }
 
   function goTo(n) {
@@ -2133,35 +2134,38 @@ tr:last-child td {
 
     var from = slides[current];
     var to = slides[n];
-
-    // Determine transition: use target slide's data-transition, or default fade
     var transType = to.dataset.transition;
 
     if (transType && transitionTypes.indexOf(transType) !== -1) {
       transitioning = true;
 
-      // Parse duration from CSS (fallback 1.2s)
-      var durations = { 'fade-black': 1600, 'sepia': 1400, 'zoom-dark': 1600, 'golden-veil': 1500 };
-      var totalDuration = durations[transType] || 1400;
-
+      // Start exit
       from.classList.add('transitioning', 'exit-' + transType);
+
+      // Start enter with overlap — make visible immediately, animation delay handles timing
       to.style.visibility = 'visible';
+      to.style.zIndex = '2';
       to.classList.add('transitioning', 'enter-' + transType);
 
-      setTimeout(function() {
+      // Listen for enter animation end to finalize
+      function onEnterDone(e) {
+        if (e.target !== to) return;
+        to.removeEventListener('animationend', onEnterDone);
+
         from.classList.remove('active');
         clearTransitionClasses(from);
-        from.style.visibility = '';
 
-        to.classList.add('active');
         clearTransitionClasses(to);
+        to.style.zIndex = '';
+        to.classList.add('active');
 
         current = n;
         transitioning = false;
         updateUI();
-      }, totalDuration);
+      }
+      to.addEventListener('animationend', onEnterDone);
+
     } else {
-      // Default simple fade
       from.classList.remove('active');
       current = n;
       to.classList.add('active');
