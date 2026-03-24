@@ -2105,8 +2105,19 @@ tr:last-child td {
     el.style.transform = '';
   }
 
+  var pendingCleanup = null;
+
+  function forceFinishTransition() {
+    if (!transitioning || !pendingCleanup) return;
+    pendingCleanup();
+    pendingCleanup = null;
+  }
+
   function goTo(n) {
-    if (n < 0 || n >= slides.length || transitioning) return;
+    if (n < 0 || n >= slides.length) return;
+
+    // Si une transition est en cours, on la termine instantanément
+    if (transitioning) forceFinishTransition();
 
     var from = slides[current];
     var to = slides[n];
@@ -2115,31 +2126,32 @@ tr:last-child td {
     if (transType && transitionTypes.indexOf(transType) !== -1) {
       transitioning = true;
 
-      // Slide sortante : reste visible en dessous, reçoit l'effet décoratif
       from.classList.add('transitioning', 'fx-' + transType);
 
-      // Slide entrante : monte par-dessus, crossfade de 0→1
       to.style.visibility = 'visible';
       to.style.opacity = '0';
       to.style.zIndex = '3';
       to.classList.add('transitioning', 'crossfade-in');
 
-      // Quand le crossfade est fini, on nettoie
-      function done(e) {
-        if (e.target !== to) return;
-        to.removeEventListener('animationend', done);
-
+      function finish() {
+        to.removeEventListener('animationend', onEnd);
         from.classList.remove('active');
         cleanSlide(from);
-
         cleanSlide(to);
         to.classList.add('active');
-
         current = n;
         transitioning = false;
+        pendingCleanup = null;
         updateUI();
       }
-      to.addEventListener('animationend', done);
+
+      function onEnd(e) {
+        if (e.target !== to) return;
+        finish();
+      }
+
+      pendingCleanup = finish;
+      to.addEventListener('animationend', onEnd);
 
     } else {
       from.classList.remove('active');
