@@ -202,81 +202,57 @@ body.show-export-btn #export-pdf-btn {
 }
 
 /* ===== CINEMATIC TRANSITIONS ===== */
-/* All transitions use cubic-bezier for smooth acceleration/deceleration */
-/* Exit and enter overlap: enter starts at ~40% of exit for fluid crossfade */
+/*
+ * Principe : la slide entrante monte PAR-DESSUS en crossfade (opacity 0→1).
+ * Pendant ce temps, la slide sortante reçoit un effet décoratif en dessous.
+ * C'est le fondu de la slide entrante qui crée la fluidité, pas deux anims séparées.
+ */
 
 .slide.transitioning {
   transition: none !important;
 }
 
-/* --- Fade to black --- */
-.slide.exit-fade-black {
-  animation: exitFadeBlack 0.6s cubic-bezier(0.4, 0, 0.7, 1) forwards;
+/* Crossfade entrant (commun à tous les effets) */
+.slide.crossfade-in {
+  animation: crossfadeIn 0.7s cubic-bezier(0.25, 0.1, 0.25, 1) both;
 }
-.slide.enter-fade-black {
-  animation: enterFadeBlack 0.55s cubic-bezier(0.3, 0, 0.2, 1) 0.25s forwards;
-  opacity: 0 !important;
-}
-@keyframes exitFadeBlack {
-  0%   { opacity: 1; filter: brightness(1); }
-  100% { opacity: 0; filter: brightness(0.3); }
-}
-@keyframes enterFadeBlack {
-  0%   { opacity: 0; filter: brightness(0.3); }
-  100% { opacity: 1; filter: brightness(1); }
+@keyframes crossfadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
 }
 
-/* --- Sepia dissolve --- */
-.slide.exit-sepia {
-  animation: exitSepia 0.55s cubic-bezier(0.4, 0, 0.7, 1) forwards;
+/* --- Effets décoratifs sur la slide sortante (dessous) --- */
+.slide.fx-fade-black {
+  animation: fxFadeBlack 0.7s cubic-bezier(0.25, 0.1, 0.25, 1) both;
 }
-.slide.enter-sepia {
-  animation: enterSepia 0.5s cubic-bezier(0.3, 0, 0.2, 1) 0.2s forwards;
-  opacity: 0 !important;
-}
-@keyframes exitSepia {
-  0%   { opacity: 1; filter: sepia(0) blur(0); }
-  100% { opacity: 0; filter: sepia(0.5) blur(2px); }
-}
-@keyframes enterSepia {
-  0%   { opacity: 0; filter: sepia(0.5) blur(2px); }
-  100% { opacity: 1; filter: sepia(0) blur(0); }
+@keyframes fxFadeBlack {
+  from { filter: brightness(1); }
+  to   { filter: brightness(0.15); }
 }
 
-/* --- Zoom into darkness --- */
-.slide.exit-zoom-dark {
-  animation: exitZoomDark 0.6s cubic-bezier(0.4, 0, 0.7, 1) forwards;
+.slide.fx-sepia {
+  animation: fxSepia 0.7s cubic-bezier(0.25, 0.1, 0.25, 1) both;
 }
-.slide.enter-zoom-dark {
-  animation: enterZoomDark 0.55s cubic-bezier(0.3, 0, 0.2, 1) 0.25s forwards;
-  opacity: 0 !important;
-}
-@keyframes exitZoomDark {
-  0%   { opacity: 1; transform: scale(1); filter: brightness(1); }
-  100% { opacity: 0; transform: scale(1.15); filter: brightness(0.2); }
-}
-@keyframes enterZoomDark {
-  0%   { opacity: 0; transform: scale(0.92); filter: brightness(0.2); }
-  100% { opacity: 1; transform: scale(1); filter: brightness(1); }
+@keyframes fxSepia {
+  from { filter: sepia(0) blur(0); }
+  to   { filter: sepia(0.7) blur(2px); }
 }
 
-/* --- Golden veil --- */
-.slide.exit-golden-veil {
-  animation: exitGoldenVeil 0.6s cubic-bezier(0.4, 0, 0.7, 1) forwards;
+.slide.fx-zoom-dark {
+  animation: fxZoomDark 0.7s cubic-bezier(0.25, 0.1, 0.25, 1) both;
 }
-.slide.enter-golden-veil {
-  animation: enterGoldenVeil 0.55s cubic-bezier(0.3, 0, 0.2, 1) 0.25s forwards;
-  opacity: 0 !important;
+@keyframes fxZoomDark {
+  from { filter: brightness(1); transform: scale(1); }
+  to   { filter: brightness(0.15); transform: scale(1.08); }
 }
-@keyframes exitGoldenVeil {
-  0%   { opacity: 1; filter: brightness(1) sepia(0); }
-  40%  { opacity: 1; filter: brightness(1.3) sepia(0.4); }
-  100% { opacity: 0; filter: brightness(1.5) sepia(0.6); }
+
+.slide.fx-golden-veil {
+  animation: fxGoldenVeil 0.7s cubic-bezier(0.25, 0.1, 0.25, 1) both;
 }
-@keyframes enterGoldenVeil {
-  0%   { opacity: 0; filter: brightness(1.5) sepia(0.6); }
-  60%  { opacity: 0.85; filter: brightness(1.1) sepia(0.15); }
-  100% { opacity: 1; filter: brightness(1) sepia(0); }
+@keyframes fxGoldenVeil {
+  0%   { filter: brightness(1) sepia(0); }
+  50%  { filter: brightness(1.4) sepia(0.5); }
+  100% { filter: brightness(0.8) sepia(0.3); }
 }
 
 /* ===== SLIDE SYSTEM ===== */
@@ -2119,13 +2095,13 @@ tr:last-child td {
   var transitioning = false;
   var transitionTypes = ['fade-black', 'sepia', 'zoom-dark', 'golden-veil'];
 
-  function clearTransitionClasses(el) {
-    transitionTypes.forEach(function(t) {
-      el.classList.remove('exit-' + t, 'enter-' + t, 'transitioning');
-    });
+  function cleanSlide(el) {
+    el.classList.remove('transitioning', 'crossfade-in');
+    transitionTypes.forEach(function(t) { el.classList.remove('fx-' + t); });
     el.style.visibility = '';
-    el.style.filter = '';
+    el.style.zIndex = '';
     el.style.opacity = '';
+    el.style.filter = '';
     el.style.transform = '';
   }
 
@@ -2139,31 +2115,31 @@ tr:last-child td {
     if (transType && transitionTypes.indexOf(transType) !== -1) {
       transitioning = true;
 
-      // Start exit
-      from.classList.add('transitioning', 'exit-' + transType);
+      // Slide sortante : reste visible en dessous, reçoit l'effet décoratif
+      from.classList.add('transitioning', 'fx-' + transType);
 
-      // Start enter with overlap — make visible immediately, animation delay handles timing
+      // Slide entrante : monte par-dessus, crossfade de 0→1
       to.style.visibility = 'visible';
-      to.style.zIndex = '2';
-      to.classList.add('transitioning', 'enter-' + transType);
+      to.style.opacity = '0';
+      to.style.zIndex = '3';
+      to.classList.add('transitioning', 'crossfade-in');
 
-      // Listen for enter animation end to finalize
-      function onEnterDone(e) {
+      // Quand le crossfade est fini, on nettoie
+      function done(e) {
         if (e.target !== to) return;
-        to.removeEventListener('animationend', onEnterDone);
+        to.removeEventListener('animationend', done);
 
         from.classList.remove('active');
-        clearTransitionClasses(from);
+        cleanSlide(from);
 
-        clearTransitionClasses(to);
-        to.style.zIndex = '';
+        cleanSlide(to);
         to.classList.add('active');
 
         current = n;
         transitioning = false;
         updateUI();
       }
-      to.addEventListener('animationend', onEnterDone);
+      to.addEventListener('animationend', done);
 
     } else {
       from.classList.remove('active');
