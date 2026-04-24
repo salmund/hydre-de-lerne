@@ -2253,6 +2253,7 @@ tr:last-child td {
     if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); prev(); }
     if (e.key === 'Escape') toggleOverview();
     if (e.key === 's' || e.key === 'S') toggleNotes();
+    if (e.key === 'Tab') { e.preventDefault(); tabCycleImage(); }
   });
 
   // Click handler for overview mode
@@ -2296,17 +2297,43 @@ tr:last-child td {
   var lbScale = 1;
   var lbPanning = false;
   var lbStartX = 0, lbStartY = 0, lbTransX = 0, lbTransY = 0, lbCurX = 0, lbCurY = 0;
+  var tabImgIndex = -1;
+
+  function getCurrentSlideImages() {
+    return Array.from(slides[current].querySelectorAll('.slide-content img:not(.no-lightbox)'));
+  }
+
+  function showInLightbox(img) {
+    lightboxImg.src = img.src;
+    lightbox.classList.add('open');
+    lightboxOpen = true;
+    lbScale = 1;
+    lbTransX = 0; lbTransY = 0; lbCurX = 0; lbCurY = 0;
+    lightboxImg.style.transform = 'scale(1) translate(0,0)';
+  }
+
+  // Tab (télécommande) : ouvre l'image de la slide en plein écran,
+  // puis cycle à l'image suivante à chaque nouvel appui, ferme après la dernière.
+  function tabCycleImage() {
+    var imgs = getCurrentSlideImages();
+    if (imgs.length === 0) return;
+    tabImgIndex++;
+    if (tabImgIndex >= imgs.length) {
+      closeLightbox();
+      return;
+    }
+    showInLightbox(imgs[tabImgIndex]);
+  }
 
   // Click on any image in slides to open lightbox
   document.querySelectorAll('.slide-content img').forEach(function(img) {
     img.addEventListener('click', function(e) {
       e.stopPropagation();
-      lightboxImg.src = img.src;
-      lightbox.classList.add('open');
-      lightboxOpen = true;
-      lbScale = 1;
-      lbTransX = 0; lbTransY = 0; lbCurX = 0; lbCurY = 0;
-      lightboxImg.style.transform = 'scale(1) translate(0,0)';
+      // Synchronise l'index Tab avec l'image cliquée pour que le cycle continue naturellement
+      var imgs = getCurrentSlideImages();
+      var idx = imgs.indexOf(img);
+      if (idx !== -1) tabImgIndex = idx;
+      showInLightbox(img);
     });
   });
 
@@ -2316,6 +2343,7 @@ tr:last-child td {
     lightboxOpen = false;
     lbScale = 1;
     lightboxImg.style.transform = 'scale(1) translate(0,0)';
+    tabImgIndex = -1;
   }
 
   lightboxClose.addEventListener('click', closeLightbox);
