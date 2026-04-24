@@ -413,6 +413,29 @@ em {
   line-height: 1.55;
 }
 
+.quote-block .quote-original {
+  font-family: 'IM Fell Great Primer SC', serif;
+  color: #c9a96e;
+  font-size: 1.35em;
+  letter-spacing: 0.06em;
+  line-height: 1.5;
+  font-style: normal;
+  margin: 0 0 0.7em 0;
+  font-weight: 500;
+  display: block;
+}
+
+.quote-block .quote-highlight-note {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.8em;
+  color: #bfbfbf;
+  font-style: italic;
+  margin-top: 0.9em;
+  padding-top: 0.6em;
+  border-top: 1px solid rgba(201,169,110,0.18);
+  line-height: 1.5;
+}
+
 /* ===== LAYOUT: SPLIT (text left + image right) ===== */
 .layout-split {
   display: flex;
@@ -1066,13 +1089,16 @@ tr:last-child td {
 <div class="slide" data-section="I. Le mythe antique"
      data-notes="Source la plus ancienne. Noter : Hésiode ne précise pas le nombre de têtes. Insister sur Héra comme 'nourrice' du monstre.">
   <div class="slide-content">
-    <div class="layout-text centered">
-      <h3>Hésiode, <em>Théogonie</em>, v. 313-318</h3>
-      <p class="muted mb-1">~700 av. J.-C. - la plus ancienne mention</p>
-      <p class="citation large" style="max-width: 78%; margin: 1em auto; font-size: 1.15em; line-height: 1.55;">« [Échidna engendra] en troisième lieu la fatale Hydre de Lerne, que nourrit Héra aux bras d'albâtre, pour assouvir son implacable haine contre Héraclès. Mais ce fils de Zeus, armé du glaive destructeur et secondé du vaillant Iolaos, immola cette Hydre, d'après les conseils de la belliqueuse Athéna. »</p>
-      <p class="citation-source mt-1">trad. d'après Leconte de Lisle (1869)</p>
-      <div class="highlight-box mt-2" style="max-width: 60%; margin-left: auto; margin-right: auto;">
-        <p>Fille de Typhon et Échidna - instrument de la haine d'Héra - pas encore de nombre de têtes, pas encore de régénération</p>
+    <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; width: 90%; max-width: 1400px; height: 100%; padding: 4vh 40px; box-sizing: border-box; gap: 2.2vh;">
+      <div style="text-align: center;">
+        <h3 style="margin-bottom: 0.3em;">Hésiode, <em>Théogonie</em>, v. 313-318</h3>
+        <p class="muted" style="margin: 0;">~700 av. J.-C. — la plus ancienne mention</p>
+      </div>
+      <div class="quote-block">
+        <p class="quote-attribution">Hésiode, <em>Théogonie</em>, v. 313-318 (trad. Leconte de Lisle, 1869)</p>
+        <p class="quote-context">poète grec, fin VIIIe — début VIIe siècle av. J.-C.</p>
+        <p class="quote-text">« [Échidna engendra] en troisième lieu la fatale Hydre de Lerne, que nourrit Héra aux bras d'albâtre, pour assouvir son implacable haine contre Héraclès. Mais ce fils de Zeus, armé du glaive destructeur et secondé du vaillant Iolaos, immola cette Hydre, d'après les conseils de la belliqueuse Athéna. »</p>
+        <p class="quote-highlight-note">Fille de Typhon et Échidna, instrument de la haine d'Héra — pas encore de nombre de têtes, pas encore de régénération.</p>
       </div>
     </div>
   </div>
@@ -1082,11 +1108,16 @@ tr:last-child td {
 <div class="slide" data-section="I. Le mythe antique"
      data-notes="Récit canonique. Pointer chaque élément : Amymoné, traits enflammés, massue, crabe, Iolaos, tête immortelle enterrée, flèches trempées, refus d'Eurysthée.">
   <div class="slide-content">
-    <div class="layout-text" style="max-width: 85%; margin: 0 auto; padding-top: 2vh;">
-      <h3 style="text-align: center;">Apollodore, <em>Bibliothèque</em>, II, 5, 2</h3>
-      <p class="muted mb-1" style="text-align: center;">Ier-IIe s. ap. J.-C. - le récit le plus détaillé</p>
-      <p class="citation" style="font-size: 0.82em; line-height: 1.45; text-align: justify; margin-top: 0.8em;">« Son deuxième travail fut de tuer l'Hydre de Lerne. Ce monstre vivait dans les marais de Lerne, mais souvent s'aventurait dans la plaine et ravageait bétail et campagne. Il avait un corps énorme hérissé de <span class="gold">neuf têtes : huit mortelles, celle du milieu immortelle</span>. Héraclès, sur le char guidé par Iolaos, arriva à Lerne et trouva l'Hydre sur une colline près de la source d'<span class="gold">Amymoné</span>. Il décocha des <span class="gold">flèches enflammées</span> pour la contraindre à sortir ; à peine dehors, il lui sauta dessus. Elle s'entortilla autour de sa jambe. Il fracassa ses têtes à la <span class="gold">massue</span> ; sans résultat : pour chaque tête tranchée, <span class="gold">deux nouvelles surgissaient</span>. Un <span class="gold">crabe</span> énorme vint mordre son pied ; il le tua, puis appela Iolaos. Celui-ci, avec des <span class="gold">tisons ardents</span>, brûla la chair à la base des têtes coupées pour les empêcher de repousser. Héraclès trancha enfin la tête immortelle, l'<span class="gold">enterra sous une lourde pierre</span> sur la route de Lerne à Éléonte. Il ouvrit le corps et <span class="gold">trempa ses flèches dans son fiel</span>. Mais Eurysthée refusa de compter cet exploit : Héraclès avait été aidé par Iolaos. »</p>
-      <p class="citation-source mt-1" style="text-align: center;">trad. Ugo Bratelli (2001)</p>
+    <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; width: 92%; max-width: 1500px; height: 100%; padding: 3vh 40px; box-sizing: border-box; gap: 2vh;">
+      <div style="text-align: center;">
+        <h3 style="margin-bottom: 0.3em;">Apollodore, <em>Bibliothèque</em>, II, 5, 2</h3>
+        <p class="muted" style="margin: 0;">Ier–IIe s. ap. J.-C. — le récit le plus détaillé</p>
+      </div>
+      <div class="quote-block">
+        <p class="quote-attribution">Apollodore, <em>Bibliothèque</em>, II, 5, 2 (trad. Ugo Bratelli, 2001)</p>
+        <p class="quote-context">récit le plus complet de l'exploit : huit éléments mythologiques y apparaissent</p>
+        <p class="quote-text" style="font-size: 1.05em; line-height: 1.55;">« Son deuxième travail fut de tuer l'Hydre de Lerne. Ce monstre vivait dans les marais de Lerne, mais souvent s'aventurait dans la plaine et ravageait bétail et campagne. Il avait un corps énorme hérissé de <span class="highlight">neuf têtes : huit mortelles, celle du milieu immortelle</span>. Héraclès, sur le char guidé par Iolaos, arriva à Lerne et trouva l'Hydre sur une colline près de la source d'<span class="highlight">Amymoné</span>. Il décocha des <span class="highlight">flèches enflammées</span> pour la contraindre à sortir ; à peine dehors, il lui sauta dessus. Elle s'entortilla autour de sa jambe. Il fracassa ses têtes à la <span class="highlight">massue</span> ; sans résultat : pour chaque tête tranchée, <span class="highlight">deux nouvelles surgissaient</span>. Un <span class="highlight">crabe</span> énorme vint mordre son pied ; il le tua, puis appela Iolaos. Celui-ci, avec des <span class="highlight">tisons ardents</span>, brûla la chair à la base des têtes coupées pour les empêcher de repousser. Héraclès trancha enfin la tête immortelle, l'<span class="highlight">enterra sous une lourde pierre</span> sur la route de Lerne à Éléonte. Il ouvrit le corps et <span class="highlight">trempa ses flèches dans son fiel</span>. Mais Eurysthée refusa de compter cet exploit : Héraclès avait été aidé par Iolaos. »</p>
+      </div>
     </div>
   </div>
 </div>
@@ -1096,12 +1127,13 @@ tr:last-child td {
      data-notes="Insister : la régénération, qui fait TOUTE la postérité du mythe, est un ajout tardif.">
   <div class="slide-content">
     <div class="layout-split">
-      <div class="split-text" style="text-align: center;">
-        <p class="citation xlarge">μυριόκρανος πολύφονος κύων</p>
-        <p class="citation-translation" style="font-size: 1em;">« Chienne aux mille têtes, avide de sang »</p>
-        <p class="citation-source mt-1">Euripide, <em>Héraclès furieux</em>, Ve s. av. J.-C.</p>
-        <div class="highlight-box mt-3">
-          <p>Premier auteur à mentionner la cautérisation par Iolaos : le motif de la régénération est comparativement tardif</p>
+      <div class="split-text">
+        <div class="quote-block">
+          <p class="quote-attribution">Euripide, <em>Héraclès furieux</em>, v. 419-420</p>
+          <p class="quote-context">poète tragique, Ve siècle av. J.-C.</p>
+          <p class="quote-original">μυριόκρανος πολύφονος κύων</p>
+          <p class="quote-text">« Chienne aux mille têtes, avide de sang »</p>
+          <p class="quote-highlight-note">Premier auteur à mentionner la cautérisation par Iolaos — le motif de la régénération reste comparativement tardif.</p>
         </div>
       </div>
       <div class="split-image">
@@ -1119,13 +1151,13 @@ tr:last-child td {
      data-bg-opacity="0.06"
      data-notes="Sophocle donne la dimension la plus terrifiante. Transition vers le venin.">
   <div class="slide-content">
-    <div class="layout-text centered">
-      <p class="citation large">δεινοτάτῳ μὲν ὕδρας<br>προστετακὼς φάσματι</p>
-      <p class="citation-translation" style="font-size: 1em;">« Terrible, l'Ombre de l'Hydre est là, collée à lui... »</p>
-      <p class="citation-source mt-1">Sophocle, <em>Trachiniennes</em></p>
-      <div class="mt-3" style="max-width: 70%; margin-left: auto; margin-right: auto; text-align: left;">
-        <p>Même morte, l'Hydre se régénère dans le corps d'Héraclès via le venin (tunique de Nessos).</p>
-        <p class="highlight" style="font-style: italic;">Celui qui combat les dragons devient lui-même un dragon.</p>
+    <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; width: 90%; max-width: 1400px; height: 100%; padding: 4vh 40px; box-sizing: border-box; gap: 2.2vh;">
+      <div class="quote-block">
+        <p class="quote-attribution">Sophocle, <em>Trachiniennes</em>, v. 1094-1095</p>
+        <p class="quote-context">poète tragique, Ve siècle av. J.-C.</p>
+        <p class="quote-original">δεινοτάτῳ μὲν ὕδρας<br>προστετακὼς φάσματι</p>
+        <p class="quote-text">« Terrible, l'Ombre de l'Hydre est là, collée à lui… »</p>
+        <p class="quote-highlight-note">Même morte, l'Hydre se régénère dans le corps d'Héraclès via le venin (tunique de Nessos). <span class="highlight">Celui qui combat les dragons devient lui-même un dragon.</span></p>
       </div>
     </div>
   </div>
@@ -1135,13 +1167,16 @@ tr:last-child td {
 <div class="slide" data-section="I. Le mythe antique"
      data-notes="Ovide : poétique de la régénération. Hercule raconte lui-même ses exploits à Achéloüs avant le combat qui lui donnera la Corne d'Abondance. Le paradoxe : blesser l'Hydre, c'est la fortifier.">
   <div class="slide-content">
-    <div class="layout-text centered">
-      <h3>Ovide, <em>Métamorphoses</em>, IX, 69-76</h3>
-      <p class="muted mb-1">~8 ap. J.-C. - Hercule énumère ses exploits à Achéloüs</p>
-      <p class="citation large" style="max-width: 75%; margin: 1em auto; font-size: 1.15em; line-height: 1.55;">« Ses blessures rendaient l'Hydre féconde, et pas une seule des têtes qui l'accompagnaient ne fut tranchée impunément : remplacée par deux autres qui renforçaient sa nuque. Cette Hydre et sa ramure de vipères nées des coups qu'on lui portait, rendue plus forte par le mal qu'elle subissait, je l'ai domptée et brûlée. »</p>
-      <p class="citation-source mt-1">trad. française, Bibliotheca Classica Selecta (UCLouvain)</p>
-      <div class="highlight-box mt-2" style="max-width: 70%; margin-left: auto; margin-right: auto;">
-        <p><em>vulneribus fecunda suis</em> - « féconde de ses propres blessures » : la formule latine résume tout le mythe</p>
+    <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; width: 90%; max-width: 1400px; height: 100%; padding: 4vh 40px; box-sizing: border-box; gap: 2.2vh;">
+      <div style="text-align: center;">
+        <h3 style="margin-bottom: 0.3em;">Ovide, <em>Métamorphoses</em>, IX, 69-76</h3>
+        <p class="muted" style="margin: 0;">~8 ap. J.-C. — Hercule énumère ses exploits à Achéloüs</p>
+      </div>
+      <div class="quote-block">
+        <p class="quote-attribution">Ovide, <em>Métamorphoses</em>, IX, 69-76 (trad. Bibliotheca Classica Selecta, UCLouvain)</p>
+        <p class="quote-context">poète latin, 43 av. J.-C. — 17 ap. J.-C.</p>
+        <p class="quote-text" style="font-size: 1.1em; line-height: 1.55;">« Ses blessures rendaient l'<span class="highlight">Hydre féconde</span>, et pas une seule des têtes qui l'accompagnaient ne fut tranchée impunément : <span class="highlight">remplacée par deux autres</span> qui renforçaient sa nuque. Cette Hydre et sa ramure de vipères nées des coups qu'on lui portait, <span class="highlight">rendue plus forte par le mal qu'elle subissait</span>, je l'ai domptée et brûlée. »</p>
+        <p class="quote-highlight-note"><em>vulneribus fecunda suis</em> — « féconde de ses propres blessures » : la formule latine résume tout le mythe.</p>
       </div>
     </div>
   </div>
@@ -1151,26 +1186,29 @@ tr:last-child td {
 <div class="slide" data-section="I. Le mythe antique"
      data-notes="Hygin insiste sur le venin mortel par le souffle seul. Transition naturelle vers la chaîne du venin.">
   <div class="slide-content">
-    <div class="layout-text centered">
-      <h3>Hygin, <em>Fables</em>, 30</h3>
-      <p class="muted mb-1">Ier-IIe s. ap. J.-C. - le venin surnaturel</p>
-      <p class="citation large" style="max-width: 75%; margin: 1em auto; font-size: 1.15em; line-height: 1.55;">« La force de son venin était telle qu'elle tuait les hommes de son souffle, et si quelqu'un passait près d'elle pendant son sommeil, elle soufflait sur l'empreinte de ses pas, et il mourait dans des tourments pires encore. Minerve aida Hercule à la vaincre ; le héros ouvrit le corps du monstre et trempa ses flèches dans son fiel. »</p>
-      <p class="citation-source mt-1">trad. d'après J.-Y. Boriaud (Belles Lettres, 1997)</p>
-      <div class="highlight-box mt-2" style="max-width: 65%; margin-left: auto; margin-right: auto;">
-        <p>Héraclès libère la région d'un fléau public : dimension de bienfaisance civique</p>
+    <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; width: 90%; max-width: 1400px; height: 100%; padding: 4vh 40px; box-sizing: border-box; gap: 2.2vh;">
+      <div style="text-align: center;">
+        <h3 style="margin-bottom: 0.3em;">Hygin, <em>Fables</em>, 30</h3>
+        <p class="muted" style="margin: 0;">Ier-IIe s. ap. J.-C. — le venin surnaturel</p>
+      </div>
+      <div class="quote-block">
+        <p class="quote-attribution">Hygin, <em>Fables</em>, 30 (trad. d'après J.-Y. Boriaud, Belles Lettres, 1997)</p>
+        <p class="quote-context">mythographe latin, Ier-IIe siècle ap. J.-C.</p>
+        <p class="quote-text" style="font-size: 1.1em; line-height: 1.55;">« La force de son <span class="highlight">venin</span> était telle qu'elle tuait les hommes de son souffle, et si quelqu'un passait près d'elle pendant son sommeil, elle soufflait sur l'<span class="highlight">empreinte de ses pas</span>, et il mourait dans des tourments pires encore. Minerve aida Hercule à la vaincre ; le héros ouvrit le corps du monstre et <span class="highlight">trempa ses flèches dans son fiel</span>. »</p>
+        <p class="quote-highlight-note">Héraclès libère la région d'un fléau public : dimension de bienfaisance civique.</p>
       </div>
     </div>
   </div>
 </div>
 
-<!-- ==================== SLIDE 7d: PSEUDO-APOLLODORE + KARKINOS ==================== -->
+<!-- ==================== SLIDE 7d: PSEUDO-APOLLODORE (TEXTE) ==================== -->
 <div class="slide" data-section="I. Le mythe antique"
-     data-notes="Pseudo-Apollodore : la source mythographique la plus complète. SEULE source canonique à mentionner le KARKINOS, le crabe géant envoyé par Héra pour aider l'Hydre. Ce crabe, écrasé par Héraclès, sera placé par Héra dans le ciel : origine de la constellation du Cancer. Les deux images prouvent la diffusion iconographique du motif dès le VIe s. av. J.-C. (lekythos du Louvre + amphore du British Museum).">
+     data-notes="Pseudo-Apollodore : la source mythographique la plus complète. SEULE source canonique à mentionner le KARKINOS, le crabe géant envoyé par Héra pour aider l'Hydre. Ce crabe, écrasé par Héraclès, sera placé par Héra dans le ciel : origine de la constellation du Cancer. Lire la citation à voix haute si possible.">
   <div class="slide-content">
-    <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; width: 94%; max-width: 1600px; height: 100%; padding: 3vh 30px; box-sizing: border-box; gap: 1.3vh;">
+    <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; width: 90%; max-width: 1400px; height: 100%; padding: 4vh 40px; box-sizing: border-box; gap: 2.5vh;">
       <div style="text-align: center;">
-        <h3 style="margin-bottom: 0.2em;">Pseudo-Apollodore, <em>Bibliothèque</em></h3>
-        <p class="muted" style="margin: 0; font-size: 0.9em;">IIe siècle ap. J.-C. — le récit canonique et l'apparition du <em>karkinos</em></p>
+        <h3 style="margin-bottom: 0.3em;">Pseudo-Apollodore, <em>Bibliothèque</em></h3>
+        <p class="muted" style="margin: 0;">IIe siècle ap. J.-C. — le récit canonique et l'apparition du <em>karkinos</em></p>
       </div>
 
       <div class="quote-block">
@@ -1178,17 +1216,32 @@ tr:last-child td {
         <p class="quote-context">mythographe grec du IIe siècle ap. J.-C.</p>
         <p class="quote-text">« Pour son deuxième travail, Héraclès reçut l'ordre de tuer l'Hydre de Lerne. La bête était élevée dans les marais de Lerne… [Héraclès l'attaqua et] elle s'accrocha à lui en s'enroulant autour d'un de ses pieds, et il ne put rien faire pour l'aider en la frappant de sa massue, car dès qu'une tête était tranchée, deux autres repoussaient. Alors <span class="highlight">un crabe géant (karkinos) vint en aide à l'Hydre</span> et mordit Héraclès au pied. Pour cela, il tua le crabe. »</p>
       </div>
+    </div>
+  </div>
+</div>
 
-      <div style="display: flex; gap: 30px; justify-content: center; align-items: flex-end; width: 100%; margin-top: 0.3vh;">
-        <figure style="flex: 2.2; margin: 0; text-align: center; max-width: 62%;">
-          <img src="images/image_crabe.png" alt="Lekythos M13.2, Héraclès, Iolaos, l'Hydre et le crabe" style="max-height: 28vh; max-width: 100%; object-fit: contain; border-radius: 4px; box-shadow: 0 6px 24px rgba(0,0,0,0.5);">
-          <figcaption class="image-caption" style="margin-top: 0.4em;"><em>Lekythos attique à figures noires</em>, ca. 500-480 av. J.-C., Louvre CA598 (Peintre de Diosphos)</figcaption>
+<!-- ==================== SLIDE 7e: ICONOGRAPHIE DU KARKINOS ==================== -->
+<div class="slide zoom-slide" data-section="I. Le mythe antique"
+     data-notes="Iconographie du karkinos : le crabe, présent dès le VIe s. av. J.-C. dans la céramique attique, prouve l'ancienneté du motif malgré sa mention tardive chez Apollodore. La lekythos du Louvre (ca. 500-480) montre la scène complète : Iolaos au brandon à gauche, Héraclès à la massue au centre, l'Hydre, Athéna à droite, et le crabe qui mord le pied d'Héraclès. L'amphore du British Museum isole le karkinos dans un tondo.">
+  <div class="slide-content">
+    <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; width: 96%; max-width: 1700px; height: 100%; padding: 3vh 40px; box-sizing: border-box; gap: 2vh;">
+      <div style="text-align: center;">
+        <h3 style="margin-bottom: 0.2em;">L'iconographie du <em>karkinos</em></h3>
+        <p class="muted" style="margin: 0;">Le crabe d'Héra dans la céramique attique, dès le VIe siècle av. J.-C.</p>
+      </div>
+
+      <div style="display: flex; gap: 50px; justify-content: center; align-items: center; width: 100%;">
+        <figure style="flex: 2; margin: 0; text-align: center; max-width: 62%;">
+          <img src="images/image_crabe.png" alt="Lekythos M13.2, Héraclès, Iolaos, l'Hydre et le crabe" style="max-height: 60vh; max-width: 100%; object-fit: contain; border-radius: 4px; box-shadow: 0 8px 30px rgba(0,0,0,0.6);">
+          <figcaption class="image-caption" style="margin-top: 0.6em;"><em>Lekythos attique à figures noires</em>, ca. 500-480 av. J.-C.<br>Musée du Louvre, CA598 (Peintre de Diosphos)</figcaption>
         </figure>
-        <figure style="flex: 1; margin: 0; text-align: center; max-width: 30%;">
-          <img src="images/image_crabe_2_amphore_british_museum.png" alt="Karkinos, détail d'amphore athénienne" style="max-height: 28vh; max-width: 100%; object-fit: contain; border-radius: 4px; box-shadow: 0 6px 24px rgba(0,0,0,0.5);">
-          <figcaption class="image-caption" style="margin-top: 0.4em;"><em>Karkinos</em>, amphore athénienne à figures rouges, VIe s. av. J.-C., British Museum</figcaption>
+        <figure style="flex: 1; margin: 0; text-align: center; max-width: 32%;">
+          <img src="images/image_crabe_2_amphore_british_museum.png" alt="Karkinos, détail d'amphore athénienne" style="max-height: 60vh; max-width: 100%; object-fit: contain; border-radius: 4px; box-shadow: 0 8px 30px rgba(0,0,0,0.6);">
+          <figcaption class="image-caption" style="margin-top: 0.6em;"><em>Karkinos</em>, détail d'amphore attique à figures rouges<br>VIe s. av. J.-C., British Museum</figcaption>
         </figure>
       </div>
+
+      <p class="text-center muted" style="font-size: 0.85em; margin: 0; max-width: 900px;">La scène complète (Iolaos au brandon + crabe mordant le pied d'Héraclès) est stable pendant plus de 500 ans.</p>
     </div>
   </div>
 </div>
@@ -1408,13 +1461,16 @@ tr:last-child td {
 <div class="slide" data-section="II. Interprétations"
      data-notes="Servius est le commentateur de Virgile à la fin du IVe s. Il propose la première lecture rationaliste du mythe. Isidore de Séville (VIIe s.) reprendra cette interprétation dans les Étymologies.">
   <div class="slide-content">
-    <div class="layout-text centered">
-      <h3>Servius, <em>Commentaire de l'Énéide</em>, VI, 287</h3>
-      <p class="muted mb-1">fin IVe s. ap. J.-C. - la première lecture rationaliste</p>
-      <p class="citation large" style="max-width: 78%; margin: 1em auto; font-size: 1.15em; line-height: 1.55;">« L'Hydre, en vérité, était un lieu qui vomissait des eaux et ravageait la cité voisine ; quand on en fermait une issue, beaucoup d'autres jaillissaient. Voyant cela, Hercule brûla les lieux et ferma ainsi les issues de l'eau. Car le mot <em>hydre</em> vient du mot <em>eau</em>. »</p>
-      <p class="citation-source mt-1">trad. française d'après l'édition Thilo-Hagen</p>
-      <div class="highlight-box mt-2" style="max-width: 70%; margin-left: auto; margin-right: auto;">
-        <p>Lecture reprise par <span class="gold">Isidore de Séville</span> (<em>Étymologies</em>, XI, 3, 34, VIIe s.) : le mythe comme allégorie de l'assèchement des marais</p>
+    <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; width: 90%; max-width: 1400px; height: 100%; padding: 4vh 40px; box-sizing: border-box; gap: 2.2vh;">
+      <div style="text-align: center;">
+        <h3 style="margin-bottom: 0.3em;">Servius, <em>Commentaire de l'Énéide</em>, VI, 287</h3>
+        <p class="muted" style="margin: 0;">fin IVe s. ap. J.-C. — la première lecture rationaliste</p>
+      </div>
+      <div class="quote-block">
+        <p class="quote-attribution">Servius, <em>In Vergilii Aeneidem Commentarii</em>, VI, 287 (trad. d'après l'édition Thilo-Hagen)</p>
+        <p class="quote-context">grammairien latin, commentateur de Virgile, fin IVe siècle ap. J.-C.</p>
+        <p class="quote-text" style="font-size: 1.1em; line-height: 1.55;">« L'Hydre, en vérité, était un <span class="highlight">lieu qui vomissait des eaux</span> et ravageait la cité voisine ; quand on en fermait une issue, <span class="highlight">beaucoup d'autres jaillissaient</span>. Voyant cela, Hercule brûla les lieux et ferma ainsi les issues de l'eau. Car le mot <em>hydre</em> vient du mot <em>eau</em>. »</p>
+        <p class="quote-highlight-note">Lecture reprise par <span class="highlight">Isidore de Séville</span> (<em>Étymologies</em>, XI, 3, 34, VIIe s.) : le mythe comme allégorie de l'assèchement des marais.</p>
       </div>
     </div>
   </div>
@@ -1730,11 +1786,14 @@ tr:last-child td {
      data-notes="Milton ancre l'Hydre dans l'imaginaire chrétien de l'enfer.">
   <div class="slide-content">
     <div class="layout-split">
-      <div class="split-text" style="text-align: center;">
-        <p class="citation xlarge">« Gorgons, and Hydras, and Chimeras dire »</p>
-        <p class="citation-translation" style="font-size: 1em;">« Gorgones, Hydres, et effroyables Chimères »</p>
-        <p class="citation-source mt-1">John Milton, <em>Paradise Lost</em>, 1667</p>
-        <p class="mt-3">L'Hydre = figure de l'enfer, du monstrueux absolu</p>
+      <div class="split-text">
+        <div class="quote-block">
+          <p class="quote-attribution">John Milton, <em>Paradise Lost</em>, II, 628</p>
+          <p class="quote-context">poète anglais, 1667 — l'Hydre dans l'imaginaire chrétien de l'enfer</p>
+          <p class="quote-original" style="font-size: 1.2em;">« Gorgons, and Hydras, and Chimeras dire »</p>
+          <p class="quote-text">« Gorgones, Hydres, et effroyables Chimères »</p>
+          <p class="quote-highlight-note">L'Hydre devient figure de l'<span class="highlight">enfer</span>, du monstrueux absolu.</p>
+        </div>
       </div>
       <div class="split-image">
         <div>
