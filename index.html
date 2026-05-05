@@ -744,6 +744,52 @@ tr:last-child td {
   text-shadow: 0 2px 8px rgba(0,0,0,0.4);
 }
 
+/* ===== MYTHE ↔ GÉOLOGIE GRID ===== */
+.myth-geo-grid {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  row-gap: 14px;
+  column-gap: 24px;
+  max-width: 1200px;
+  margin: 0.5em auto 0;
+  align-items: center;
+  font-size: 1em;
+}
+.myth-geo-grid .mg-header {
+  font-family: 'IM Fell Great Primer SC', serif;
+  font-size: 1.2em;
+  letter-spacing: 0.06em;
+  padding: 6px 0;
+  font-weight: 500;
+}
+.myth-geo-grid .mg-myth-h { color: #e8c77a; text-align: right; padding-right: 22px; }
+.myth-geo-grid .mg-geo-h { color: #9bc1d6; text-align: left; padding-left: 22px; }
+.myth-geo-grid .mg-myth {
+  background: rgba(201,169,110,0.12);
+  border-right: 3px solid #c9a96e;
+  border-radius: 4px 0 0 4px;
+  padding: 12px 22px;
+  text-align: right;
+  color: #fff;
+  font-weight: 400;
+}
+.myth-geo-grid .mg-geo {
+  background: rgba(155,193,214,0.10);
+  border-left: 3px solid #9bc1d6;
+  border-radius: 0 4px 4px 0;
+  padding: 12px 22px;
+  text-align: left;
+  color: #fff;
+  font-weight: 400;
+}
+.myth-geo-grid .mg-arrow {
+  color: #e8c77a;
+  font-size: 1.8em;
+  font-weight: 300;
+  text-align: center;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.4);
+}
+
 /* ===== TIMELINE BAR ===== */
 .timeline-bar {
   display: flex;
@@ -1426,19 +1472,29 @@ tr:last-child td {
      data-bg-opacity="0.15"
      data-notes="Le tableau est très parlant. Montrer la correspondance terme à terme.">
   <div class="slide-content">
-    <div class="layout-text-wide">
+    <div class="layout-text-wide" style="text-align: center;">
       <h3>Lecture naturaliste : le système karstique de Lerne</h3>
-      <table class="mt-2" style="max-width: 85%;">
-        <thead>
-          <tr><th>Mythe</th><th>Géologie</th></tr>
-        </thead>
-        <tbody>
-          <tr><td>Têtes multiples</td><td>Sources et gouffres karstiques</td></tr>
-          <tr><td>Couper une tête</td><td>Boucher un gouffre</td></tr>
-          <tr><td>Deux têtes repoussent</td><td>L'eau ressort ailleurs</td></tr>
-          <tr><td>Cautériser au feu</td><td>Brûler la végétation pour localiser les gouffres</td></tr>
-        </tbody>
-      </table>
+      <div class="myth-geo-grid mt-3">
+        <div class="mg-header mg-myth-h">Mythe</div>
+        <div></div>
+        <div class="mg-header mg-geo-h">Géologie</div>
+
+        <div class="mg-myth">Têtes multiples</div>
+        <div class="mg-arrow">↔</div>
+        <div class="mg-geo">Sources et gouffres karstiques</div>
+
+        <div class="mg-myth">Couper une tête</div>
+        <div class="mg-arrow">↔</div>
+        <div class="mg-geo">Boucher un gouffre</div>
+
+        <div class="mg-myth">Deux têtes repoussent</div>
+        <div class="mg-arrow">↔</div>
+        <div class="mg-geo">L'eau ressort ailleurs</div>
+
+        <div class="mg-myth">Cautériser au feu</div>
+        <div class="mg-arrow">↔</div>
+        <div class="mg-geo">Brûler la végétation pour localiser les gouffres</div>
+      </div>
       <p class="citation mt-3" style="font-size: 1em;">« locum evomentem aquas » <span class="citation-source">(Servius)</span></p>
     </div>
   </div>
@@ -1448,13 +1504,10 @@ tr:last-child td {
 <div class="slide" data-section="II. Interprétations"
      data-notes="Servius est le commentateur de Virgile à la fin du IVe s. Il propose la première lecture rationaliste du mythe. Isidore de Séville (VIIe s.) reprendra cette interprétation dans les Étymologies.">
   <div class="slide-content">
-    <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; width: 90%; max-width: 1400px; height: 100%; padding: 4vh 40px; box-sizing: border-box; gap: 2.2vh;">
-      <div style="text-align: center;">
-        <h3 style="margin-bottom: 0.3em;">Servius, <em>Commentaire de l'Énéide</em>, VI, 287</h3>
-      </div>
+    <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; width: 90%; max-width: 1400px; height: 100%; padding: 4vh 40px; box-sizing: border-box;">
       <div class="quote-block">
         <p class="quote-attribution">Servius, <em>In Vergilii Aeneidem Commentarii</em>, VI, 287 (trad. d'après l'édition Thilo-Hagen)</p>
-        <p class="quote-text" style="font-size: 1.1em; line-height: 1.55;">« L'Hydre, en vérité, était un <span class="highlight">lieu qui vomissait des eaux</span> et ravageait la cité voisine ; quand on en fermait une issue, <span class="highlight">beaucoup d'autres jaillissaient</span>. Voyant cela, Hercule brûla les lieux et ferma ainsi les issues de l'eau. Car le mot <em>hydre</em> vient du mot <em>eau</em>. »</p>
+        <p class="quote-text" style="font-size: 1.2em; line-height: 1.55;">« L'Hydre, en vérité, était un <span class="highlight">lieu qui vomissait des eaux</span> et ravageait la cité voisine ; quand on en fermait une issue, <span class="highlight">beaucoup d'autres jaillissaient</span>. Voyant cela, Hercule brûla les lieux et ferma ainsi les issues de l'eau. Car le mot <em>hydre</em> vient du mot <em>eau</em>. »</p>
       </div>
     </div>
   </div>
