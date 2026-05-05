@@ -2473,10 +2473,22 @@ tr:last-child td {
   });
 
   // Escape closes lightbox too (before slide navigation)
+  // ArrowRight/ArrowLeft : ferment la lightbox ET naviguent vers la slide suivante/précédente
   document.addEventListener('keydown', function(e) {
-    if (lightboxOpen && (e.key === 'Escape' || e.key === 'ArrowLeft' || e.key === 'ArrowRight')) {
+    if (!lightboxOpen) return;
+    if (e.key === 'Escape') {
       e.stopImmediatePropagation();
       closeLightbox();
+    } else if (e.key === 'ArrowRight') {
+      e.stopImmediatePropagation();
+      e.preventDefault();
+      closeLightbox();
+      next();
+    } else if (e.key === 'ArrowLeft') {
+      e.stopImmediatePropagation();
+      e.preventDefault();
+      closeLightbox();
+      prev();
     }
   }, true);
 
