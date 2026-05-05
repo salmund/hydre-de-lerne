@@ -709,22 +709,39 @@ tr:last-child td {
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: 14px 10px;
+  max-width: 1500px;
+  margin: 0 auto;
 }
 
 .chain-item {
-  background: rgba(201,169,110,0.08);
-  border: 1px solid #a08550;
-  border-radius: 20px;
-  padding: 8px 20px;
-  font-size: 0.75em;
-  color: #e0e0e0;
+  background: linear-gradient(135deg, rgba(201,169,110,0.18), rgba(201,169,110,0.05));
+  border: 1.5px solid #c9a96e;
+  border-radius: 36px;
+  padding: 14px 26px;
+  font-size: 1em;
+  font-weight: 500;
+  color: #fff;
   white-space: nowrap;
+  letter-spacing: 0.02em;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.35);
+  transition: transform 0.2s ease;
+}
+
+.chain-item.key {
+  background: linear-gradient(135deg, rgba(201,169,110,0.55), rgba(232,199,122,0.25));
+  border: 2px solid #e8c77a;
+  color: #1a1208;
+  font-weight: 700;
+  text-shadow: 0 1px 0 rgba(255,255,255,0.25);
+  box-shadow: 0 6px 20px rgba(201,169,110,0.4);
 }
 
 .chain-arrow {
-  color: #c9a96e;
-  font-size: 1.2em;
+  color: #e8c77a;
+  font-size: 2em;
+  font-weight: 300;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.4);
 }
 
 /* ===== TIMELINE BAR ===== */
@@ -1251,10 +1268,10 @@ tr:last-child td {
      data-bg-opacity="0.06"
      data-notes="Le venin traverse TOUTE la mythologie grecque. Un fil conducteur depuis l'Hydre jusqu'à la chute de Troie.">
   <div class="slide-content">
-    <div class="layout-text centered">
-      <h3>Le venin : fil rouge mythologique</h3>
-      <div class="venin-chain mt-3">
-        <span class="chain-item">Hydre</span>
+    <div class="layout-text centered" style="width: 95%; max-width: 1700px;">
+      <h3 style="margin-bottom: 1.5em;">Le venin : fil rouge mythologique</h3>
+      <div class="venin-chain">
+        <span class="chain-item key">Hydre</span>
         <span class="chain-arrow">→</span>
         <span class="chain-item">Flèches empoisonnées</span>
         <span class="chain-arrow">→</span>
@@ -1262,12 +1279,13 @@ tr:last-child td {
         <span class="chain-arrow">→</span>
         <span class="chain-item">Tunique</span>
         <span class="chain-arrow">→</span>
-        <span class="chain-item">Mort d'Héraclès</span>
+        <span class="chain-item key">Mort d'Héraclès</span>
         <span class="chain-arrow">→</span>
         <span class="chain-item">Arc de Philoctète</span>
         <span class="chain-arrow">→</span>
-        <span class="chain-item">Fin de la guerre de Troie</span>
+        <span class="chain-item key">Fin de la guerre de Troie</span>
       </div>
+      <p style="margin-top: 2em; font-size: 0.85em; color: #fff; font-style: italic; max-width: 1100px; margin-left: auto; margin-right: auto;">Le venin de l'Hydre traverse toute la mythologie grecque, de la naissance du poison jusqu'à la chute de Troie.</p>
     </div>
   </div>
 </div>
