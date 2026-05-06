@@ -1056,6 +1056,174 @@ tr:last-child td {
 #presentation.overview .slide.active {
   outline-color: #c9a96e;
 }
+
+/* ===== SOURCES LITTÉRAIRES TIMELINE ===== */
+.sources-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 2em;
+  margin-top: 2.5em;
+  width: 100%;
+}
+
+.st-cards {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 0.8em;
+  position: relative;
+}
+
+.st-card {
+  position: relative;
+  padding: 0.9em 0.7em 0.8em;
+  border-radius: 6px;
+  background: rgba(255,255,255,0.05);
+  border-top: 4px solid;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25em;
+  transition: transform 0.2s ease;
+}
+
+.st-card.greek {
+  border-top-color: #c9a96e;
+  box-shadow: 0 0 0 1px rgba(201,169,110,0.25) inset;
+}
+
+.st-card.latin {
+  border-top-color: #6ea3c9;
+  box-shadow: 0 0 0 1px rgba(110,163,201,0.25) inset;
+}
+
+.st-date {
+  font-family: 'IM Fell Great Primer SC', serif;
+  font-size: 0.78em;
+  letter-spacing: 0.05em;
+  color: #c9a96e;
+}
+
+.st-card.latin .st-date {
+  color: #6ea3c9;
+}
+
+.st-name {
+  font-weight: 600;
+  font-size: 1.05em;
+  color: #fff;
+}
+
+.st-work {
+  font-style: italic;
+  font-size: 0.82em;
+  color: rgba(255,255,255,0.75);
+}
+
+.st-lang {
+  margin-top: 0.4em;
+  font-size: 0.65em;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #c9a96e;
+}
+
+.st-card.latin .st-lang {
+  color: #6ea3c9;
+}
+
+.st-track {
+  position: relative;
+  height: 2px;
+  background: linear-gradient(to right,
+    #c9a96e 0%, #c9a96e 50%,
+    #6ea3c9 50%, #6ea3c9 70%,
+    #c9a96e 70%, #c9a96e 100%);
+  margin: 0 4%;
+  border-radius: 2px;
+}
+
+.st-track::before,
+.st-track::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  transform: translateY(-50%);
+}
+
+.st-track::before { left: -5px; background: #c9a96e; }
+.st-track::after  { right: -5px; background: #c9a96e; }
+
+.st-track-labels {
+  display: flex;
+  justify-content: space-between;
+  margin: 0.4em 4% 0;
+  font-size: 0.7em;
+  color: rgba(255,255,255,0.6);
+  font-style: italic;
+}
+
+/* Panneau bas : sources qui précisent le nombre de têtes */
+.heads-count-panel {
+  margin-top: 2em;
+  padding: 1.2em 1.5em;
+  border-top: 1px dashed rgba(201,169,110,0.4);
+  border-bottom: 1px dashed rgba(201,169,110,0.4);
+  background: rgba(201,169,110,0.04);
+}
+
+.heads-count-panel h5 {
+  margin: 0 0 1em;
+  font-family: 'IM Fell Great Primer SC', serif;
+  font-size: 1em;
+  letter-spacing: 0.08em;
+  color: #c9a96e;
+}
+
+.hc-row {
+  display: flex;
+  justify-content: center;
+  gap: 1.5em;
+  flex-wrap: wrap;
+}
+
+.hc-card {
+  padding: 0.7em 1.2em;
+  border-radius: 6px;
+  background: rgba(255,255,255,0.06);
+  border-left: 3px solid;
+  text-align: left;
+  min-width: 220px;
+}
+
+.hc-card.greek { border-left-color: #c9a96e; }
+.hc-card.latin { border-left-color: #6ea3c9; }
+
+.hc-source {
+  display: block;
+  font-weight: 600;
+  font-size: 0.95em;
+  color: #fff;
+}
+
+.hc-count {
+  display: block;
+  font-size: 1.4em;
+  color: #c9a96e;
+  margin: 0.15em 0;
+  font-family: 'IM Fell Great Primer SC', serif;
+}
+
+.hc-card.latin .hc-count { color: #6ea3c9; }
+
+.hc-note {
+  display: block;
+  font-size: 0.78em;
+  font-style: italic;
+  color: rgba(255,255,255,0.7);
+}
 </style>
 </head>
 
@@ -1141,7 +1309,7 @@ tr:last-child td {
   </div>
 </div>
 
-<!-- ==================== SLIDE 4b: LE MYTHE EN BREF ==================== -->
+<!-- ==================== SLIDE 5: LE MYTHE EN BREF ==================== -->
 <div class="slide" data-section="I. Le mythe antique"
      data-notes="Rappel narratif rapide avant de plonger dans les sources. Trois moments clés : la menace (le monstre des marais), le combat (Iolaos et la cautérisation, le crabe d'Héra) et la victoire (tête immortelle enterrée, flèches trempées dans le venin). Insister : ces éléments ne sont pas tous présents dans toutes les sources — c'est la sédimentation de plusieurs siècles de récits.">
   <div class="slide-content">
@@ -1179,20 +1347,87 @@ tr:last-child td {
   </div>
 </div>
 
-<!-- ==================== SLIDE 5: SOURCES LITTÉRAIRES ==================== -->
+<!-- ==================== SLIDE 6: SOURCES LITTÉRAIRES ==================== -->
 <div class="slide" data-section="I. Le mythe antique"
      data-bg="images/03_Hydre_Louvre_CA7318.jpg"
      data-bg-opacity="0.08"
      data-notes="Vue d'ensemble : huit siècles de récits qui s'enrichissent les uns les autres. Insister : le nombre de têtes n'est JAMAIS fixé, et la régénération + cautérisation n'apparaît qu'au Ve siècle (Euripide). Hésiode, le plus ancien, ne précise même pas le nombre.">
   <div class="slide-content">
-    <div class="layout-text-wide" style="text-align: center;">
+    <div class="layout-text-wide" style="text-align: center; padding-top: 2vh;">
       <h3>Les sources littéraires</h3>
-      <h4>Une sédimentation de plus de huit siècles</h4>
+      <h4>Une construction sur plus de huit siècles</h4>
+
+      <div class="sources-timeline">
+        <div class="st-cards">
+          <div class="st-card greek">
+            <div class="st-date">~700 av. J.-C.</div>
+            <div class="st-name">Hésiode</div>
+            <div class="st-work">Théogonie</div>
+            <div class="st-lang">grec</div>
+          </div>
+          <div class="st-card greek">
+            <div class="st-date">~440 av. J.-C.</div>
+            <div class="st-name">Sophocle</div>
+            <div class="st-work">Trachiniennes</div>
+            <div class="st-lang">grec</div>
+          </div>
+          <div class="st-card greek">
+            <div class="st-date">~416 av. J.-C.</div>
+            <div class="st-name">Euripide</div>
+            <div class="st-work">Héraclès furieux</div>
+            <div class="st-lang">grec</div>
+          </div>
+          <div class="st-card latin">
+            <div class="st-date">~8 ap. J.-C.</div>
+            <div class="st-name">Ovide</div>
+            <div class="st-work">Métamorphoses</div>
+            <div class="st-lang">latin</div>
+          </div>
+          <div class="st-card greek">
+            <div class="st-date">II<sup>e</sup> s. ap. J.-C.</div>
+            <div class="st-name">Pseudo-Apollodore</div>
+            <div class="st-work">Bibliothèque</div>
+            <div class="st-lang">grec</div>
+          </div>
+          <div class="st-card latin">
+            <div class="st-date">II<sup>e</sup> s. ap. J.-C.</div>
+            <div class="st-name">Hygin</div>
+            <div class="st-work">Fables</div>
+            <div class="st-lang">latin</div>
+          </div>
+        </div>
+
+        <div>
+          <div class="st-track"></div>
+          <div class="st-track-labels">
+            <span>VII<sup>e</sup> s. av. J.-C.</span>
+            <span>V<sup>e</sup> s. av. J.-C.</span>
+            <span>I<sup>er</sup> s. ap. J.-C.</span>
+            <span>II<sup>e</sup> s. ap. J.-C.</span>
+          </div>
+        </div>
+
+        <div class="heads-count-panel">
+          <h5>Sources qui précisent le nombre de têtes</h5>
+          <div class="hc-row">
+            <div class="hc-card greek">
+              <span class="hc-source">Euripide, <em>Héraclès furieux</em></span>
+              <span class="hc-count">« mille »</span>
+              <span class="hc-note">μυριόκρανος — hyperbole poétique</span>
+            </div>
+            <div class="hc-card greek">
+              <span class="hc-source">Pseudo-Apollodore, <em>Bibliothèque</em></span>
+              <span class="hc-count">9 têtes</span>
+              <span class="hc-note">8 mortelles + 1 immortelle</span>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
 
-<!-- ==================== SLIDE 5b: HÉSIODE TEXTE INTÉGRAL ==================== -->
+<!-- ==================== SLIDE 7: HÉSIODE TEXTE INTÉGRAL ==================== -->
 <div class="slide" data-section="I. Le mythe antique"
      data-notes="Source la plus ancienne. Noter : Hésiode ne précise pas le nombre de têtes. Insister sur Héra comme 'nourrice' du monstre.">
   <div class="slide-content">
@@ -1208,7 +1443,7 @@ tr:last-child td {
   </div>
 </div>
 
-<!-- ==================== SLIDE 6: CITATION EURIPIDE ==================== -->
+<!-- ==================== SLIDE 8: CITATION EURIPIDE ==================== -->
 <div class="slide" data-section="I. Le mythe antique"
      data-notes="Insister : la régénération, qui fait TOUTE la postérité du mythe, est un ajout tardif.">
   <div class="slide-content">
@@ -1229,7 +1464,7 @@ tr:last-child td {
   </div>
 </div>
 
-<!-- ==================== SLIDE 7: SOPHOCLE ==================== -->
+<!-- ==================== SLIDE 9: SOPHOCLE ==================== -->
 <div class="slide" data-section="I. Le mythe antique"
      data-bg="images/04_Hydre_vase_Nationalmuseet_B96.jpg"
      data-bg-opacity="0.06"
@@ -1245,7 +1480,7 @@ tr:last-child td {
   </div>
 </div>
 
-<!-- ==================== SLIDE 7a: PSEUDO-APOLLODORE - RÉCIT CANONIQUE ==================== -->
+<!-- ==================== SLIDE 10: PSEUDO-APOLLODORE - RÉCIT CANONIQUE ==================== -->
 <div class="slide" data-section="I. Le mythe antique"
      data-notes="Le récit canonique le plus complet — c'est de cette source que dérive presque toute l'iconographie postérieure. Pointer chaque élément en lisant : Amymoné (la source du marais), traits enflammés, massue, le KARKINOS (crabe géant envoyé par Héra — placé ensuite dans le ciel comme constellation du Cancer), Iolaos et la cautérisation, tête immortelle enterrée sous un rocher, flèches trempées dans le venin, refus d'Eurysthée. Précision académique : 'Pseudo-Apollodore' car la Bibliothèque, longtemps attribuée à Apollodore d'Athènes (IIe s. av.), est en réalité l'œuvre d'un mythographe anonyme du IIe s. ap. J.-C.">
   <div class="slide-content">
@@ -1258,7 +1493,7 @@ tr:last-child td {
   </div>
 </div>
 
-<!-- ==================== SLIDE 7b: OVIDE TEXTE INTÉGRAL ==================== -->
+<!-- ==================== SLIDE 11: OVIDE TEXTE INTÉGRAL ==================== -->
 <div class="slide" data-section="I. Le mythe antique"
      data-notes="Ovide : poétique de la régénération. Hercule raconte lui-même ses exploits à Achéloüs avant le combat qui lui donnera la Corne d'Abondance. Le paradoxe : blesser l'Hydre, c'est la fortifier.">
   <div class="slide-content">
@@ -1274,7 +1509,7 @@ tr:last-child td {
   </div>
 </div>
 
-<!-- ==================== SLIDE 7c: HYGIN TEXTE INTÉGRAL ==================== -->
+<!-- ==================== SLIDE 12: HYGIN TEXTE INTÉGRAL ==================== -->
 <div class="slide" data-section="I. Le mythe antique"
      data-notes="Hygin insiste sur le venin mortel par le souffle seul. Transition naturelle vers la chaîne du venin.">
   <div class="slide-content">
@@ -1290,7 +1525,7 @@ tr:last-child td {
   </div>
 </div>
 
-<!-- ==================== SLIDE 8: LE VENIN - FIL ROUGE ==================== -->
+<!-- ==================== SLIDE 13: LE VENIN - FIL ROUGE ==================== -->
 <div class="slide" data-section="I. Le mythe antique"
      data-bg="images/Amphore grecque représentant hercules combattant l'hydre de lerne.jpg"
      data-bg-opacity="0.06"
@@ -1318,7 +1553,7 @@ tr:last-child td {
   </div>
 </div>
 
-<!-- ==================== SLIDE 9: INFLUENCES ORIENTALES ==================== -->
+<!-- ==================== SLIDE 14: INFLUENCES ORIENTALES ==================== -->
 <div class="slide" data-section="I. Le mythe antique"
      data-bg="images/sceau akkadien de Tell Asmar  2500 AV JC.png"
      data-bg-opacity="0.1"
@@ -1340,7 +1575,7 @@ tr:last-child td {
   </div>
 </div>
 
-<!-- ==================== SLIDE 10: ICONOGRAPHIE - INTRO ==================== -->
+<!-- ==================== SLIDE 15: ICONOGRAPHIE - INTRO ==================== -->
 <div class="slide" data-section="I. Le mythe antique"
      data-notes="Présenter l'évolution iconographique avant de montrer les vases.">
   <div class="slide-content">
@@ -1362,7 +1597,7 @@ tr:last-child td {
   </div>
 </div>
 
-<!-- ==================== SLIDE 10b: ICONOGRAPHIE DU KARKINOS ==================== -->
+<!-- ==================== SLIDE 16: ICONOGRAPHIE DU KARKINOS ==================== -->
 <div class="slide zoom-slide" data-section="I. Le mythe antique"
      data-notes="Iconographie du karkinos : le crabe, présent dès le VIe s. av. J.-C. dans la céramique attique, prouve l'ancienneté du motif malgré sa mention tardive chez Pseudo-Apollodore. La lekythos du Louvre (ca. 500-480) montre la scène complète : Iolaos au brandon à gauche, Héraclès à la massue au centre, l'Hydre, Athéna à droite, et le crabe qui mord le pied d'Héraclès. L'amphore du British Museum isole le karkinos dans un tondo. Le crabe sera placé par Héra dans le ciel : origine de la constellation du Cancer.">
   <div class="slide-content">
@@ -1383,7 +1618,7 @@ tr:last-child td {
   </div>
 </div>
 
-<!-- ==================== SLIDE 11: VASES SECONDAIRES ==================== -->
+<!-- ==================== SLIDE 17: VASES SECONDAIRES ==================== -->
 <div class="slide" data-section="I. Le mythe antique"
      data-notes="Montrer rapidement la diversité des représentations.">
   <div class="slide-content">
@@ -1404,7 +1639,7 @@ tr:last-child td {
   </div>
 </div>
 
-<!-- ==================== SLIDE 12: HYDRIE CÉRÉTAINE - INTRO ==================== -->
+<!-- ==================== SLIDE 18: HYDRIE CÉRÉTAINE ==================== -->
 <div class="slide" data-section="I. Le mythe antique"
      data-notes="Oeuvre clé : tous les éléments du mythe sont présents.">
   <div class="slide-content">
@@ -1425,7 +1660,7 @@ tr:last-child td {
   </div>
 </div>
 
-<!-- ==================== SLIDE 13b: MOSAÏQUE ROMAINE ==================== -->
+<!-- ==================== SLIDE 19: MOSAÏQUE ROMAINE ==================== -->
 <div class="slide zoom-slide" data-section="I. Le mythe antique"
      data-notes="Mosaïque romaine du IIIe s. - montre la continuité du motif dans l'art romain et la diversité des supports (pas seulement des vases).">
   <div class="slide-content">
@@ -1436,7 +1671,7 @@ tr:last-child td {
   </div>
 </div>
 
-<!-- ==================== MOSAÏQUE GALLO-ROMAINE ==================== -->
+<!-- ==================== SLIDE 20: MOSAÏQUE GALLO-ROMAINE ==================== -->
 <div class="slide zoom-slide" data-section="I. Le mythe antique"
      data-notes="Mosaïque gallo-romaine trouvée en France. Montrer la diffusion du motif dans tout l'Empire.">
   <div class="slide-content">
@@ -1447,7 +1682,7 @@ tr:last-child td {
   </div>
 </div>
 
-<!-- ==================== SLIDE 14: POINT CLÉ ==================== -->
+<!-- ==================== SLIDE 21: POINT CLÉ ==================== -->
 <div class="slide" data-section="I. Le mythe antique"
      data-bg="images/Caeretan Hydria 520 510 BC.jpg"
      data-bg-opacity="0.08"
@@ -1460,7 +1695,7 @@ tr:last-child td {
   </div>
 </div>
 
-<!-- ==================== SLIDE 15: SECTION II TITLE ==================== -->
+<!-- ==================== SLIDE 22: SECTION II TITLE ==================== -->
 <div class="slide" data-section="II. Interprétations"
      data-bg="images/12_Lerne_site_archeologique.jpg"
      data-bg-opacity="0.3"
@@ -1473,7 +1708,7 @@ tr:last-child td {
   </div>
 </div>
 
-<!-- ==================== SLIDE 16: LECTURE GÉOLOGIQUE ==================== -->
+<!-- ==================== SLIDE 23: LECTURE GÉOLOGIQUE ==================== -->
 <div class="slide" data-section="II. Interprétations"
      data-bg="images/12_Lerne_site_archeologique.jpg"
      data-bg-opacity="0.15"
@@ -1507,7 +1742,7 @@ tr:last-child td {
   </div>
 </div>
 
-<!-- ==================== SLIDE 16b: SERVIUS TEXTE INTÉGRAL ==================== -->
+<!-- ==================== SLIDE 24: SERVIUS TEXTE INTÉGRAL ==================== -->
 <div class="slide" data-section="II. Interprétations"
      data-notes="Servius est le commentateur de Virgile à la fin du IVe s. Il propose la première lecture rationaliste du mythe. Isidore de Séville (VIIe s.) reprendra cette interprétation dans les Étymologies.">
   <div class="slide-content">
@@ -1520,7 +1755,7 @@ tr:last-child td {
   </div>
 </div>
 
-<!-- ==================== SLIDE 17: LECTURE RITUELLE ==================== -->
+<!-- ==================== SLIDE 25: LECTURE RITUELLE ==================== -->
 <div class="slide" data-section="II. Interprétations"
      data-bg="images/12_Lerne_site_archeologique.jpg"
      data-bg-opacity="0.08"
@@ -1539,7 +1774,7 @@ tr:last-child td {
   </div>
 </div>
 
-<!-- ==================== SLIDE 18: LECTURE HÉROÏQUE ==================== -->
+<!-- ==================== SLIDE 26: LECTURE HÉROÏQUE ==================== -->
 <div class="slide" data-section="II. Interprétations"
      data-bg="images/03_Hydre_Louvre_CA7318.jpg"
      data-bg-opacity="0.06"
@@ -1555,7 +1790,7 @@ tr:last-child td {
   </div>
 </div>
 
-<!-- ==================== SLIDE 19: SECTION III TITLE ==================== -->
+<!-- ==================== SLIDE 27: SECTION III TITLE ==================== -->
 <div class="slide" data-section="III. Réception post-antique"
      data-bg="images/Hercules_and_the_Lernaean_Hydra,_1875-1876,_by_Gustave_Moreau_-_Art_Institute_of_Chicago_-_DSC09590.jpg"
      data-bg-opacity="0.1"
@@ -1568,7 +1803,7 @@ tr:last-child td {
   </div>
 </div>
 
-<!-- ==================== SLIDE 20: TRANSITION QUOTE ==================== -->
+<!-- ==================== SLIDE 28: TRANSITION QUOTE ==================== -->
 <div class="slide" data-section="III. Réception post-antique"
      data-bg="images/enluminure%20m%C3%A9di%C3%A9vale.jpg"
      data-bg-opacity="0.08"
@@ -1581,7 +1816,7 @@ tr:last-child td {
   </div>
 </div>
 
-<!-- ==================== SLIDE 21: ENLUMINURE MÉDIÉVALE (plein écran zoom) ==================== -->
+<!-- ==================== SLIDE 29: ENLUMINURE MÉDIÉVALE ==================== -->
 <div class="slide zoom-slide" data-section="III. Réception post-antique"
      data-notes="Montrer l'enluminure en détail avant de présenter le contexte médiéval.">
   <div class="slide-content">
