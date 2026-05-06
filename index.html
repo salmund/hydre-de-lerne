@@ -258,6 +258,12 @@ body.show-export-btn #export-pdf-btn {
   text-shadow: 0 1px 8px rgba(0,0,0,0.5);
   align-items: center;
   justify-content: center;
+  font-size: 1.3em;
+}
+
+/* Exception : slides denses où le bump de taille casse la mise en page */
+.slide.no-text-bump > .slide-content {
+  font-size: 1em;
 }
 
 /* ===== TYPOGRAPHY ===== */
@@ -1887,7 +1893,7 @@ tr:last-child td {
 </div>
 
 <!-- ==================== ALCIATO ZOOM - ÉVOLUTION (1550 vs 1615) ==================== -->
-<div class="slide zoom-slide" data-section="III. Réception post-antique"
+<div class="slide zoom-slide no-text-bump" data-section="III. Réception post-antique"
      data-notes="Montrer le GLISSEMENT VISUEL. Les têtes humaines = vices humains. Pont vers l'Hydre aristocratique de 1789.">
   <div class="slide-content">
     <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 3vh 40px; width: 95%; max-width: 1500px; gap: 1.5vh;">
@@ -2109,7 +2115,7 @@ tr:last-child td {
 </div>
 
 <!-- ==================== SLIDE 44: XIANGLIU ==================== -->
-<div class="slide" data-section="III. Réception post-antique"
+<div class="slide no-text-bump" data-section="III. Réception post-antique"
      data-notes="Rapide - montrer l'universalité du motif.">
   <div class="slide-content">
     <div class="layout-split">
