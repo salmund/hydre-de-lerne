@@ -1061,28 +1061,28 @@ tr:last-child td {
 .sources-timeline {
   display: flex;
   flex-direction: column;
-  gap: 2em;
-  margin-top: 2.5em;
+  gap: 1em;
+  margin-top: 1.2em;
   width: 100%;
 }
 
 .st-cards {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
-  gap: 0.8em;
+  gap: 0.6em;
   position: relative;
 }
 
 .st-card {
   position: relative;
-  padding: 0.9em 0.7em 0.8em;
-  border-radius: 6px;
+  padding: 0.55em 0.5em 0.5em;
+  border-radius: 5px;
   background: rgba(255,255,255,0.05);
-  border-top: 4px solid;
+  border-top: 3px solid;
   text-align: center;
   display: flex;
   flex-direction: column;
-  gap: 0.25em;
+  gap: 0.15em;
   transition: transform 0.2s ease;
 }
 
@@ -1098,8 +1098,8 @@ tr:last-child td {
 
 .st-date {
   font-family: 'IM Fell Great Primer SC', serif;
-  font-size: 0.78em;
-  letter-spacing: 0.05em;
+  font-size: 0.7em;
+  letter-spacing: 0.04em;
   color: #c9a96e;
 }
 
@@ -1109,19 +1109,21 @@ tr:last-child td {
 
 .st-name {
   font-weight: 600;
-  font-size: 1.05em;
+  font-size: 0.92em;
   color: #fff;
+  line-height: 1.15;
 }
 
 .st-work {
   font-style: italic;
-  font-size: 0.82em;
+  font-size: 0.72em;
   color: rgba(255,255,255,0.75);
+  line-height: 1.2;
 }
 
 .st-lang {
-  margin-top: 0.4em;
-  font-size: 0.65em;
+  margin-top: 0.2em;
+  font-size: 0.58em;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: #c9a96e;
@@ -1159,43 +1161,41 @@ tr:last-child td {
 .st-track-labels {
   display: flex;
   justify-content: space-between;
-  margin: 0.4em 4% 0;
-  font-size: 0.7em;
+  margin: 0.3em 4% 0;
+  font-size: 0.62em;
   color: rgba(255,255,255,0.6);
   font-style: italic;
 }
 
 /* Panneau bas : sources qui précisent le nombre de têtes */
 .heads-count-panel {
-  margin-top: 2em;
-  padding: 1.2em 1.5em;
+  margin-top: 0.6em;
+  padding: 0.7em 1em 0.8em;
   border-top: 1px dashed rgba(201,169,110,0.4);
   border-bottom: 1px dashed rgba(201,169,110,0.4);
   background: rgba(201,169,110,0.04);
 }
 
 .heads-count-panel h5 {
-  margin: 0 0 1em;
+  margin: 0 0 0.6em;
   font-family: 'IM Fell Great Primer SC', serif;
-  font-size: 1em;
+  font-size: 0.85em;
   letter-spacing: 0.08em;
   color: #c9a96e;
 }
 
 .hc-row {
-  display: flex;
-  justify-content: center;
-  gap: 1.5em;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0.6em;
 }
 
 .hc-card {
-  padding: 0.7em 1.2em;
-  border-radius: 6px;
+  padding: 0.4em 0.5em;
+  border-radius: 5px;
   background: rgba(255,255,255,0.06);
   border-left: 3px solid;
-  text-align: left;
-  min-width: 220px;
+  text-align: center;
 }
 
 .hc-card.greek { border-left-color: #c9a96e; }
@@ -1204,25 +1204,37 @@ tr:last-child td {
 .hc-source {
   display: block;
   font-weight: 600;
-  font-size: 0.95em;
+  font-size: 0.72em;
   color: #fff;
+  line-height: 1.15;
+}
+
+.hc-source .hc-date {
+  display: block;
+  font-weight: 400;
+  font-size: 0.85em;
+  font-style: italic;
+  color: rgba(255,255,255,0.55);
+  margin-top: 0.05em;
 }
 
 .hc-count {
   display: block;
-  font-size: 1.4em;
+  font-size: 1.25em;
   color: #c9a96e;
-  margin: 0.15em 0;
+  margin: 0.15em 0 0.1em;
   font-family: 'IM Fell Great Primer SC', serif;
+  letter-spacing: 0.04em;
 }
 
 .hc-card.latin .hc-count { color: #6ea3c9; }
 
 .hc-note {
   display: block;
-  font-size: 0.78em;
+  font-size: 0.62em;
   font-style: italic;
-  color: rgba(255,255,255,0.7);
+  color: rgba(255,255,255,0.65);
+  line-height: 1.2;
 }
 </style>
 </head>
@@ -1353,9 +1365,9 @@ tr:last-child td {
      data-bg-opacity="0.08"
      data-notes="Vue d'ensemble : huit siècles de récits qui s'enrichissent les uns les autres. Insister : le nombre de têtes n'est JAMAIS fixé, et la régénération + cautérisation n'apparaît qu'au Ve siècle (Euripide). Hésiode, le plus ancien, ne précise même pas le nombre.">
   <div class="slide-content">
-    <div class="layout-text-wide" style="text-align: center; padding-top: 2vh;">
-      <h3>Les sources littéraires</h3>
-      <h4>Une construction sur plus de huit siècles</h4>
+    <div class="layout-text-wide" style="text-align: center; padding: 1vh 40px; max-height: 100%; overflow: hidden;">
+      <h3 style="margin-bottom: 0.1em;">Les sources littéraires</h3>
+      <h4 style="margin-top: 0;">Une construction sur plus de huit siècles</h4>
 
       <div class="sources-timeline">
         <div class="st-cards">
@@ -1408,16 +1420,28 @@ tr:last-child td {
         </div>
 
         <div class="heads-count-panel">
-          <h5>Sources qui précisent le nombre de têtes</h5>
+          <h5>Un nombre de têtes instable selon les auteurs</h5>
           <div class="hc-row">
             <div class="hc-card greek">
-              <span class="hc-source">Euripide, <em>Héraclès furieux</em></span>
-              <span class="hc-count">« mille »</span>
-              <span class="hc-note">μυριόκρανος — hyperbole poétique</span>
+              <span class="hc-source">Alcée<span class="hc-date">VI<sup>e</sup> s. av. J.-C.</span></span>
+              <span class="hc-count">9</span>
             </div>
             <div class="hc-card greek">
-              <span class="hc-source">Pseudo-Apollodore, <em>Bibliothèque</em></span>
-              <span class="hc-count">9 têtes</span>
+              <span class="hc-source">Simonide<span class="hc-date">VI<sup>e</sup>–V<sup>e</sup> s. av. J.-C.</span></span>
+              <span class="hc-count">50</span>
+            </div>
+            <div class="hc-card greek">
+              <span class="hc-source">Euripide<span class="hc-date">~416 av. J.-C.</span></span>
+              <span class="hc-count">« mille »</span>
+              <span class="hc-note">hyperbole poétique</span>
+            </div>
+            <div class="hc-card greek">
+              <span class="hc-source">Diodore<span class="hc-date">I<sup>er</sup> s. av. J.-C.</span></span>
+              <span class="hc-count">100</span>
+            </div>
+            <div class="hc-card greek">
+              <span class="hc-source">Pseudo-Apollodore<span class="hc-date">II<sup>e</sup> s. ap. J.-C.</span></span>
+              <span class="hc-count">9</span>
               <span class="hc-note">8 mortelles + 1 immortelle</span>
             </div>
           </div>
